@@ -1,0 +1,72 @@
+[*]
+[*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
+[*] Wed Jul 30 17:56:19 2025
+[*]
+[dumpfile] "C:\Users\foeza\Documents\foez-ahmed\uvm\build\tb_adder_top.vcd"
+[dumpfile_mtime] "Wed Jul 30 17:43:03 2025"
+[dumpfile_size] 37999
+[savefile] "C:\Users\foeza\Documents\foez-ahmed\uvm\wave.gtkw"
+[timestart] 0
+[size] 1920 1009
+[pos] -9 -9
+*-18.188551 1138000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] tb_adder_top.
+[treeopen] tb_adder_top.u_adder_top.
+[sst_width] 197
+[signals_width] 158
+[sst_expanded] 1
+[sst_vpaned_height] 297
+@200
+-TOP
+@28
+[color] 2
+tb_adder_top.arst_ni
+[color] 3
+tb_adder_top.clk_i
+@22
+tb_adder_top.opa_i[7:0]
+@28
+tb_adder_top.opa_valid_i
+tb_adder_top.opa_ready_o
+@22
+tb_adder_top.opb_i[7:0]
+@28
+tb_adder_top.opb_valid_i
+tb_adder_top.opb_ready_o
+@22
+tb_adder_top.sum_o[7:0]
+@28
+tb_adder_top.sum_valid_o
+tb_adder_top.sum_ready_i
+@200
+-
+-CORE_ADDER
+@22
+tb_adder_top.u_adder_top.core_adder.opa_i[7:0]
+tb_adder_top.u_adder_top.core_adder.opb_i[7:0]
+tb_adder_top.u_adder_top.core_adder.sum_o[7:0]
+@200
+-
+-FIFO_OPA
+@28
+[color] 2
+tb_adder_top.u_adder_top.opa_fifo.arst_ni
+[color] 3
+tb_adder_top.u_adder_top.opa_fifo.clk_i
+@22
+tb_adder_top.u_adder_top.opa_fifo.data_in_i[7:0]
+@28
+tb_adder_top.u_adder_top.opa_fifo.data_in_valid_i
+tb_adder_top.u_adder_top.opa_fifo.data_in_ready_o
+@22
+tb_adder_top.u_adder_top.opa_fifo.data_out_o[7:0]
+@28
+tb_adder_top.u_adder_top.opa_fifo.data_out_valid_o
+tb_adder_top.u_adder_top.opa_fifo.data_out_ready_i
+@200
+-
+@22
+tb_adder_top.u_adder_top.opa_fifo.rd_ptr[4:0]
+tb_adder_top.u_adder_top.opa_fifo.wr_ptr[4:0]
+[pattern_trace] 1
+[pattern_trace] 0
