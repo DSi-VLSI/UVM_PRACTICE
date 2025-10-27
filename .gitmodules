@@ -1,0 +1,3 @@
+[submodule "adder_uvm_tb"]
+	path = adder_uvm_tb
+	url = https://github.com/DSi-VLSI/adder_uvm_tb.git
