@@ -1,3 +1,3 @@
-# Plans
-- APB UART - Ashraf, Fazlul, Tahmeed, Akash
-- Async FIFO Buffer - Amit, Sakib
+# DUT
+- AXI UART - Tahmeed
+- APB UART - Fazlul
