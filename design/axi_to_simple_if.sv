@@ -1,8 +1,8 @@
 `include "axi/typedef.svh"
 
 module axi_to_simple_if #(
-    parameter type         axi_req_t  = base_pkg::base_req_t,
-    parameter type         axi_resp_t = base_pkg::base_resp_t,
+    parameter type         axi_req_t  = base_pkg::axi_req_t,
+    parameter type         axi_resp_t = base_pkg::axi_resp_t,
     parameter logic [63:0] MEM_BASE   = '0,
     parameter int          MEM_SIZE   = 32
 ) (
