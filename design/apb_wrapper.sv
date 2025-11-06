@@ -27,7 +27,8 @@ module apb_wrapper #(
     output logic [  DATA_W-1:0] mem_wdata,
     output logic [DATA_W/8-1:0] mem_wstrb,
     input  logic [  DATA_W-1:0] mem_rdata,
-    input  logic                mem_radata_valid
+    input  logic                mem_radata_valid,
+    input  logic                mem_error_i
 );
 
   assign mem_wdata = PWDATA;
@@ -53,7 +54,7 @@ module apb_wrapper #(
       .PSELx(PSELx),
       .PENABLE(PENABLE),
       .PWRITE(PWRITE),
-      .error(slv_err[0] | slv_err[1]),
+      .error(slv_err[0] | slv_err[1] | mem_error_i),
       .rdata_valid(mem_radata_valid),
       .prdata_intr(mem_rdata),
       .req(mem_req_o),

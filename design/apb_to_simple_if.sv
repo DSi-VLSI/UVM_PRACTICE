@@ -65,7 +65,8 @@ module apb_to_simple_if #(
       .mem_wdata       (intr_wdata),
       .mem_wstrb       (intr_wstrb),
       .mem_rdata       (intr_rdata),
-      .mem_radata_valid(intr_radata_valid)
+      .mem_radata_valid(intr_radata_valid),
+      .mem_error_i     (mem_wresp_i | mem_rresp_i)
   );
 
 endmodule
