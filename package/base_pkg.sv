@@ -1,4 +1,5 @@
 `include "axi/typedef.svh"
+`include "apb/typedef.svh"
 
 package base_pkg;
 
