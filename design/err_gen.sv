@@ -5,7 +5,7 @@
 module err_gen #(
     parameter int              ADDR_W = 32,
     parameter int              DATA_W = 64,
-    parameter int              MEM_SIZE_K = 64,
+    parameter int              MEM_SIZE = 32,
     parameter int unsigned     BASE_ADDR = 0
 )(
     input  logic [ADDR_W-1:0]  addr,   // Input: APB address from the master
@@ -14,7 +14,7 @@ module err_gen #(
 
     // --- Local Parameters ---
     // MEM_SIZE_B: Total memory size in bytes.
-    localparam int MEM_SIZE_B = MEM_SIZE_K * 1024; // e.g., 64 * 1024 = 65536 bytes for 64KB
+    localparam int MEM_SIZE_B = 2**MEM_SIZE; // e.g., 64 * 1024 = 65536 bytes for 64KB
 
     // ADDR_ALIGN: Required address alignment in bytes, based on the data bus width.
     // For a 64-bit data bus, accesses must be 8-byte aligned.

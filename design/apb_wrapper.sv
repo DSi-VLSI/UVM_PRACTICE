@@ -6,7 +6,7 @@
 module apb_wrapper #(
     parameter int          ADDR_W     = 32,
     parameter int          DATA_W     = 64,
-    parameter int          MEM_SIZE_K = 64,
+    parameter int          MEM_SIZE   = 32,
     parameter int unsigned BASE_ADDR  = 0
 ) (
     input  logic                PCLK,
@@ -38,7 +38,7 @@ module apb_wrapper #(
   // This section translates the system-level APB address (PADDR) to the local address
   // space of the internal memory (`generic_mem`). It calculates the required internal
   // address width and subtracts the base address to get the local address.
-  localparam ADDR_W_T = $clog2(MEM_SIZE_K) + 10;
+  localparam ADDR_W_T = MEM_SIZE;
 
   // --- Internal Signals ---
   logic [2:0] slv_err;  // Slave error flags from the error generator
@@ -69,7 +69,7 @@ module apb_wrapper #(
   err_gen #(
       .ADDR_W(ADDR_W),
       .DATA_W(DATA_W),
-      .MEM_SIZE_K(MEM_SIZE_K),
+      .MEM_SIZE(MEM_SIZE),
       .BASE_ADDR(BASE_ADDR)
   ) e_gen (
       .addr (PADDR),

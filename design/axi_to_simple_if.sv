@@ -1,15 +1,15 @@
 `include "axi/typedef.svh"
 
 module axi_to_simple_if #(
-    parameter type         axi_req_t  = base_pkg::axi_req_t,
-    parameter type         axi_resp_t = base_pkg::axi_resp_t,
+    parameter type         req_t  = base_pkg::axi_req_t,
+    parameter type         resp_t = base_pkg::axi_resp_t,
     parameter logic [63:0] MEM_BASE   = '0,
     parameter int          MEM_SIZE   = 32
 ) (
     input  logic      arst_ni,
     input  logic      clk_i,
-    input  axi_req_t  req_i,
-    output axi_resp_t resp_o,
+    input  req_t  req_i,
+    output resp_t resp_o,
 
     output logic                           mem_we_o,
     output logic [           MEM_SIZE-1:0] mem_waddr_o,
@@ -44,8 +44,8 @@ module axi_to_simple_if #(
       .AxiMaxReadTxns (2),
       .FullBW         (0),
       .FallThrough    (0),
-      .full_req_t     (axi_req_t),
-      .full_resp_t    (axi_resp_t),
+      .full_req_t     (req_t),
+      .full_resp_t    (resp_t),
       .lite_req_t     (axil_req_t),
       .lite_resp_t    (axil_resp_t)
   ) u_axi_to_axi_lite (

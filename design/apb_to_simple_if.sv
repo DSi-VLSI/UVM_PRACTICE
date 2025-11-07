@@ -1,15 +1,15 @@
 `include "apb/typedef.svh"
 
 module apb_to_simple_if #(
-    parameter type         apb_req_t  = base_pkg::apb_req_t,
-    parameter type         apb_resp_t = base_pkg::apb_resp_t,
-    parameter logic [63:0] MEM_BASE   = '0,
-    parameter int          MEM_SIZE   = 32
+    parameter type         req_t    = base_pkg::apb_req_t,
+    parameter type         resp_t   = base_pkg::apb_resp_t,
+    parameter logic [63:0] MEM_BASE = '0,
+    parameter int          MEM_SIZE = 32
 ) (
-    input  logic      arst_ni,
-    input  logic      clk_i,
-    input  apb_req_t  req_i,
-    output apb_resp_t resp_o,
+    input  logic  arst_ni,
+    input  logic  clk_i,
+    input  req_t  req_i,
+    output resp_t resp_o,
 
     output logic                           mem_we_o,
     output logic [           MEM_SIZE-1:0] mem_waddr_o,
@@ -43,10 +43,10 @@ module apb_to_simple_if #(
   assign mem_raddr_o = intr_addr_o;
 
   apb_wrapper #(
-      .ADDR_W    (ADDR_W),
-      .DATA_W    (DATA_W),
-      .MEM_SIZE_K(MEM_SIZE - 10),
-      .BASE_ADDR (MEM_BASE)
+      .ADDR_W   (ADDR_W),
+      .DATA_W   (DATA_W),
+      .MEM_SIZE (MEM_SIZE),
+      .BASE_ADDR(MEM_BASE)
   ) u_apb_wrapper (
       .PCLK            (clk_i),
       .PRESETn         (arst_ni),
