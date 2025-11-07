@@ -47,6 +47,8 @@ module uart_top #(
   logic       rx_fifo_data_valid;
   logic       rx_fifo_data_ready;
 
+  logic slow_clk;
+
 `ifdef USE_AXI
   axi_to_simple_if
 `elsif USE_APB
@@ -109,8 +111,37 @@ module uart_top #(
       .arst_ni(arst_ni),
       .clk_i(clk_i),
       .div_i(clk_div),
-      .clk_o(clk_o)
+      .clk_o(slow_clk)
   );
 
+  cdc_fifo #(
+      .ELEM_WIDTH (8),
+      .FIFO_SIZE  (2)
+  ) u_tx_fifo (
+      .arst_ni(arst_ni),
+      .elem_in_i(tx_fifo_data),
+      .elem_in_clk_i(clk_i),
+      .elem_in_valid_i(tx_fifo_data_valid),
+      .elem_in_ready_o(tx_fifo_data_ready),
+      .elem_out_o(), // TODO
+      .elem_out_clk_i(slow_clk),
+      .elem_out_valid_o(), // TODO
+      .elem_out_ready_i() // TODO
+  );
+
+  cdc_fifo #(
+      .ELEM_WIDTH (8),
+      .FIFO_SIZE  (2)
+  ) u_rx_fifo (
+      .arst_ni(arst_ni),
+      .elem_in_i(), // TODO
+      .elem_in_clk_i(slow_clk),
+      .elem_in_valid_i(), // TODO
+      .elem_in_ready_o(), // TODO
+      .elem_out_o(rx_fifo_data),
+      .elem_out_clk_i(clk_i),
+      .elem_out_valid_o(rx_fifo_data_valid),
+      .elem_out_ready_i(rx_fifo_data_ready)
+  );
 
 endmodule
