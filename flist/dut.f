@@ -1,8 +1,13 @@
+// INCLUDE
+-i ${REPO_ROOT}/include
+
+// PACKAGES
 ${REPO_ROOT}/package/axi_pkg.sv
 ${REPO_ROOT}/package/apb_pkg.sv
 ${REPO_ROOT}/package/base_pkg.sv
 ${REPO_ROOT}/package/cf_math_pkg.sv
 
+// AXI MEM IF
 ${REPO_ROOT}/design/stream_register.sv
 ${REPO_ROOT}/design/axi_atop_filter.sv
 ${REPO_ROOT}/design/spill_register_flushable.sv
@@ -25,6 +30,14 @@ ${REPO_ROOT}/design/axi_to_axi_lite_id_reflect.sv
 ${REPO_ROOT}/design/axi_to_axi_lite.sv
 ${REPO_ROOT}/design/axi_fifo.sv
 ${REPO_ROOT}/design/axi_to_simple_if.sv
+
+// APB MEM IF
+${REPO_ROOT}/design/apb_fsm.sv
+${REPO_ROOT}/design/err_gen.sv
+${REPO_ROOT}/design/apb_wrapper.sv
+${REPO_ROOT}/design/apb_to_simple_if.sv
+
+// UART CORE
 ${REPO_ROOT}/design/uart_reg_if.sv
 ${REPO_ROOT}/design/clk_div.sv
 ${REPO_ROOT}/design/gray_to_bin.sv

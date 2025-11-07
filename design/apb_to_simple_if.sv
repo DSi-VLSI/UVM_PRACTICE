@@ -13,13 +13,13 @@ module apb_to_simple_if #(
 
     output logic                           mem_we_o,
     output logic [           MEM_SIZE-1:0] mem_waddr_o,
-    output logic [$bits(req_i.w.data)-1:0] mem_wdata_o,
-    output logic [$bits(req_i.w.strb)-1:0] mem_wstrb_o,
+    output logic [$bits(req_i.pwdata)-1:0] mem_wdata_o,
+    output logic [ $bits(req_i.pstrb)-1:0] mem_wstrb_o,
     input  logic [                    1:0] mem_wresp_i,
 
     output logic                           mem_re_o,
     output logic [           MEM_SIZE-1:0] mem_raddr_o,
-    input  logic [$bits(req_i.w.data)-1:0] mem_rdata_i,
+    input  logic [$bits(req_i.pwdata)-1:0] mem_rdata_i,
     input  logic [                    1:0] mem_rresp_i
 );
 
