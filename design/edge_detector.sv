@@ -86,4 +86,5 @@ module edge_detector #(
       .d_i(q_intermediate),
       .q_o(q_final)
   );
+
 endmodule
