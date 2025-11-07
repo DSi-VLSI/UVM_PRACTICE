@@ -1,123 +1,136 @@
 # UART Register Map
 
-This document describes the memory-mapped registers for the UART peripheral interface.
+This document describes the memory-mapped register interface for the UART peripheral.
+
+---
 
 ## Register Summary
 
-| Offset | Register Name      | Access | Width | Reset Value | Description                              |
-|--------|-------------------|--------|-------|-------------|------------------------------------------|
-| 0x00   | UART_ENABLE       | R/W    | 1     | 0x0         | UART interface enable control            |
-| 0x04   | CLK_DIVISOR       | R/W    | 32    | 0x28B1      | Baud rate clock divisor                  |
-| 0x08   | PARITY_CTRL       | R/W    | 2     | 0x0         | Parity configuration control             |
-| 0x0C   | STOP_BITS         | R/W    | 1     | 0x0         | Stop bit configuration                   |
-| 0x10   | TX_FIFO           | W      | 8     | N/A         | Transmit FIFO data buffer                |
-| 0x14   | TX_COUNT          | R      | 8     | 0x0         | Transmit FIFO occupancy counter          |
-| 0x18   | RX_FIFO           | R      | 8     | N/A         | Receive FIFO data buffer                 |
-| 0x1C   | RX_COUNT          | R      | 8     | 0x0         | Receive FIFO occupancy counter           |
-
-## Register Descriptions
-
-### UART_ENABLE (0x00)
-**Access:** Read/Write  
-**Width:** 1 bit  
-**Reset Value:** 0x0
-
-Enables or disables the UART peripheral.
-
-| Bit | Name   | Access | Reset | Description                                    |
-|-----|--------|--------|-------|------------------------------------------------|
-| 0   | ENABLE | R/W    | 0     | 0: UART disabled<br>1: UART enabled            |
+| Address | Register Name              | Access | Reset Value  | Description                                    |
+|---------|----------------------------|--------|--------------|------------------------------------------------|
+| 0x00    | Control Register           | RW     | 0x00000000   | Clock and FIFO control                         |
+| 0x04    | Configuration Register     | RW     | 0x00000000   | UART configuration                             |
+| 0x08    | Clock Divisor Register     | RW     | 0x000028B1   | Baud rate generation divisor                   |
+| 0x0C    | TX FIFO Status Register    | R      | 0x00000000   | Transmit FIFO occupancy status                 |
+| 0x10    | RX FIFO Status Register    | R      | 0x00000000   | Receive FIFO occupancy status                  |
+| 0x14    | TX FIFO Data Register      | W      | N/A          | Write data to transmit FIFO                    |
+| 0x18    | RX FIFO Data Register      | R      | N/A          | Read and pop data from receive FIFO            |
+| 0x1C    | RX FIFO Peek Register      | R      | N/A          | Read data from receive FIFO without popping    |
 
 ---
 
-### CLK_DIVISOR (0x04)
-**Access:** Read/Write  
-**Width:** 32 bits  
-**Reset Value:** 0x28B1 (10417 decimal)
+## Detailed Register Descriptions
 
-Configures the baud rate clock divisor. The divisor determines the UART communication speed based on the system clock frequency.
+### UART Control Register (0x00)
 
-**Formula:** `Baud Rate = System Clock / CLK_DIVISOR`
+**Address:** 0x00  
+**Reset Value:** 0x00000000  
+**Access:** Read/Write
 
-| Bits  | Name        | Access | Reset  | Description                     |
-|-------|-------------|--------|--------|---------------------------------|
-| 31:0  | CLK_DIVISOR | R/W    | 10417  | Clock divisor value             |
+| Bits    | Field Name           | Type | Reset | Description                                    |
+|---------|----------------------|------|-------|------------------------------------------------|
+| 0       | CLK_EN               | RW   | 0     | Clock Enable (1: Enable, 0: Disable)           |
+| 1       | TX_FIFO_FLUSH        | RW   | 0     | Flush TX FIFO (1: Flush, 0: Normal Operation)  |
+| 2       | RX_FIFO_FLUSH        | RW   | 0     | Flush RX FIFO (1: Flush, 0: Normal Operation)  |
+| 31:3    | Reserved             | -    | 0     | Reserved for future use                        |
 
----
-
-### PARITY_CTRL (0x08)
-**Access:** Read/Write  
-**Width:** 2 bits  
-**Reset Value:** 0x0
-
-Controls parity checking for error detection.
-
-| Bit | Name        | Access | Reset | Description                                          |
-|-----|-------------|--------|-------|------------------------------------------------------|
-| 0   | PARITY_EN   | R/W    | 0     | 0: Parity disabled<br>1: Parity enabled              |
-| 1   | PARITY_TYPE | R/W    | 0     | 0: Even parity<br>1: Odd parity                      |
+**Description:** Controls the clock enable and FIFO flush operations. The flush bits are self-clearing and will automatically return to 0 after the flush operation completes.
 
 ---
 
-### STOP_BITS (0x0C)
-**Access:** Read/Write  
-**Width:** 1 bit  
-**Reset Value:** 0x0
+### UART Configuration Register (0x04)
 
-Configures the number of stop bits transmitted after each data frame.
+**Address:** 0x04  
+**Reset Value:** 0x00000000  
+**Access:** Read/Write
 
-| Bit | Name      | Access | Reset | Description                                    |
-|-----|-----------|--------|-------|------------------------------------------------|
-| 0   | STOP_BITS | R/W    | 0     | 0: 1 stop bit<br>1: 2 stop bits                |
+| Bits    | Field Name           | Type | Reset | Description                                    |
+|---------|----------------------|------|-------|------------------------------------------------|
+| 0       | PARITY_EN            | RW   | 0     | Enable Parity Checking                         |
+| 1       | PARITY_TYPE          | RW   | 0     | Parity Type (0: Even, 1: Odd)                  |
+| 2       | STOP_BITS            | RW   | 0     | Stop Bit Configuration (0: 1 bit, 1: 2 bits)   |
+| 3       | RX_INT_EN            | RW   | 0     | RX Interrupt Enable                            |
+| 31:4    | Reserved             | -    | 0     | Reserved for future use                        |
 
----
-
-### TX_FIFO (0x10)
-**Access:** Write-Only  
-**Width:** 8 bits  
-**Reset Value:** N/A
-
-Transmit FIFO buffer. Writing to this register pushes data into the transmit queue. Data is automatically transmitted when the UART is enabled.
-
-| Bits | Name    | Access | Reset | Description                           |
-|------|---------|--------|-------|---------------------------------------|
-| 7:0  | TX_DATA | W      | N/A   | Data byte to transmit                 |
+**Description:** Configures UART communication parameters including parity, stop bits, and interrupt enable.
 
 ---
 
-### TX_COUNT (0x14)
-**Access:** Read-Only  
-**Width:** 8 bits  
-**Reset Value:** 0x0
+### Clock Divisor Register (0x08)
 
-Reports the current number of bytes stored in the transmit FIFO buffer.
+**Address:** 0x08  
+**Reset Value:** 0x000028B1  
+**Access:** Read/Write
 
-| Bits | Name     | Access | Reset | Description                              |
-|------|----------|--------|-------|------------------------------------------|
-| 7:0  | TX_COUNT | R      | 0     | Number of bytes in TX FIFO (0-255)       |
+| Bits    | Field Name           | Type | Reset      | Description                                    |
+|---------|----------------------|------|------------|------------------------------------------------|
+| 31:0    | CLK_DIV              | RW   | 0x000028B1 | Clock divisor value for baud rate generation   |
 
----
-
-### RX_FIFO (0x18)
-**Access:** Read-Only  
-**Width:** 8 bits  
-**Reset Value:** N/A
-
-Receive FIFO buffer. Reading from this register pops the oldest received byte from the queue.
-
-| Bits | Name    | Access | Reset | Description                           |
-|------|---------|--------|-------|---------------------------------------|
-| 7:0  | RX_DATA | R      | N/A   | Received data byte                    |
+**Description:** This register configures the baud rate by dividing the system clock. The baud rate is calculated as: `Baud Rate = System Clock / (CLK_DIV + 1)`
 
 ---
 
-### RX_COUNT (0x1C)
-**Access:** Read-Only  
-**Width:** 8 bits  
-**Reset Value:** 0x0
+### TX FIFO Status Register (0x0C)
 
-Reports the current number of bytes available in the receive FIFO buffer.
+**Address:** 0x0C  
+**Reset Value:** 0x00000000  
+**Access:** Read-Only
 
-| Bits | Name     | Access | Reset | Description                              |
-|------|----------|--------|-------|------------------------------------------|
-| 7:0  | RX_COUNT | R      | 0     | Number of bytes in RX FIFO (0-255)       |
+| Bits    | Field Name           | Type | Reset | Description                                    |
+|---------|----------------------|------|-------|------------------------------------------------|
+| 31:0    | TX_FIFO_COUNT        | R    | 0     | Number of bytes currently in the TX FIFO       |
+
+---
+
+### RX FIFO Status Register (0x10)
+
+**Address:** 0x10  
+**Reset Value:** 0x00000000  
+**Access:** Read-Only
+
+| Bits    | Field Name           | Type | Reset | Description                                    |
+|---------|----------------------|------|-------|------------------------------------------------|
+| 31:0    | RX_FIFO_COUNT        | R    | 0     | Number of bytes currently in the RX FIFO       |
+
+---
+
+### TX FIFO Data Register (0x14)
+
+**Address:** 0x14  
+**Access:** Write-Only
+
+| Bits    | Field Name           | Type | Description                                    |
+|---------|----------------------|------|------------------------------------------------|
+| 7:0     | TX_DATA              | W    | Data byte to be transmitted                    |
+| 31:8    | Reserved             | -    | Reserved for future use                        |
+
+**Description:** Writing to this register pushes the data byte into the transmit FIFO for transmission.
+
+---
+
+### RX FIFO Data Register (0x18)
+
+**Address:** 0x18
+**Access:** Read-Only
+
+| Bits    | Field Name           | Type | Description                                    |
+|---------|----------------------|------|------------------------------------------------|
+| 7:0     | RX_DATA              | R    | Received data byte                             |
+| 31:8    | Reserved             | -    | Reserved for future use                        |
+
+**Description:** Reading from this register pops and returns the next byte from the receive FIFO.
+
+---
+
+### RX FIFO Peek Register (0x1C)
+
+**Address:** 0x1C  
+**Access:** Read-Only
+
+| Bits    | Field Name           | Type | Description                                    |
+|---------|----------------------|------|------------------------------------------------|
+| 7:0     | RX_PEEK_DATA         | R    | Received data byte (non-destructive read)      |
+| 31:8    | Reserved             | -    | Reserved for future use                        |
+
+**Description:** Reading from this register returns the next byte from the receive FIFO without removing it from the queue.
+
