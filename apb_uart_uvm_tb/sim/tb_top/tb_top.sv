@@ -6,7 +6,7 @@ import test_pkg::*;
 `define USE_APB
 
 
-module tb_top;
+module apb_tb_top;
 
     bit clk;
 
