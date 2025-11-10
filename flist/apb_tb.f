@@ -1,3 +1,4 @@
+-d USE_APB
 -i ${REPO_ROOT}/apb_uart_uvm_tb/sim/include
 -i ${REPO_ROOT}/apb_uart_uvm_tb/sim/package
 -i ${REPO_ROOT}/apb_uart_uvm_tb/sim/test
@@ -14,3 +15,4 @@ ${REPO_ROOT}/apb_uart_uvm_tb/sim/package/apb_agent_pkg.sv
 ${REPO_ROOT}/apb_uart_uvm_tb/sim/package/environment_pkg.sv
 ${REPO_ROOT}/apb_uart_uvm_tb/sim/package/test_pkg.sv
 ${REPO_ROOT}/apb_uart_uvm_tb/sim/tb_top/apb_tb_top.sv
+-L uvm
