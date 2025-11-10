@@ -1,0 +1,90 @@
+
+
+//  Class: apb_driver
+//
+class apb_driver extends uvm_driver #(seq_item);
+    `uvm_component_utils(apb_driver);
+
+    seq_item item;
+    virtual apb_interface apb_inf;
+
+
+    function new(string name = "apb_driver", uvm_component parent = null);
+        super.new(name, parent);
+    endfunction
+
+    function void build_phase(uvm_phase phase);
+        super.build_phase(phase);
+        void'(uvm_config_db #(virtual apb_interface)::get(this, "", "apb_inf", apb_inf));
+        `uvm_info(get_full_name(), "Driver Build Phase", UVM_LOW);
+    endfunction
+
+
+    function void connect_phase(uvm_phase phase);
+        super.connect_phase(phase);
+        `uvm_info(get_name(), "Driver Connect Phase", UVM_LOW);
+    endfunction
+
+    task run_phase(uvm_phase phase);
+        super.run_phase(phase);
+        `uvm_info(get_name(), "Driver run phase started", UVM_HIGH);
+
+        forever begin
+            seq_item_port.get_next_item(item);
+
+            if(item.isReset)
+                reset();
+            else
+                write_read();
+            
+            seq_item_port.item_done(item);
+
+        end
+
+
+    endtask
+
+    task reset();
+        
+        apb_inf.apb_req.penable_i = 1'b0;
+        apb_inf.apb_req.psel_i = 1'b0;
+        apb_inf.apb_req.pwrite_i = 1'b0;
+        apb_inf.apb_req.paddr_i = 0;
+        apb_inf.apb_req.pwdata_i = 0;
+        apb_inf.apb_req.pstrb_i = 0;
+
+        apb_inf.presetn_i = 1'b0;
+        
+        @(posedge apb_inf.pclk);
+        apb_inf.presetn_i = 1'b1;
+
+        @(posedge apb_inf.pclk);
+        
+    endtask
+
+    task write_read();
+
+        apb_inf.apb_req.psel_i = 1'b1;
+        apb_inf.apb_req.penable_i = 1'b0;
+
+        apb_inf.apb_req.pwrite_i = item.pwrite;
+        apb_inf.apb_req.paddr_i = item.paddr;
+        apb_inf.apb_req.pwdata_i = item.pwdata;
+        apb_inf.apb_req.pstrb_i = item.pstrb;
+
+        @(posedge apb_inf.pclk);
+        apb_inf.apb_req.penable_i = 1'b1;
+
+        // wait (apb_inf.apb_resp.pready_o);
+        repeat(5) @(posedge apb_inf.pclk);
+
+
+        @(posedge apb_inf.pclk);
+        apb_inf.apb_req.penable_i = 1'b0;
+        apb_inf.apb_req.psel_i = 1'b0;
+
+    endtask
+
+   
+    
+endclass
