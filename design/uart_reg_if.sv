@@ -215,7 +215,7 @@ import base_pkg::REG_RX_FIFO_PEEK_ADDR;
       cfg_parity_type_o <= '0;
       cfg_stop_bits_o   <= '0;
       cfg_rx_int_en_o   <= '0;
-      clk_div_o         <= '0;
+      clk_div_o         <= 'h28B1;
     end else begin
       // Update registers on successful write (OKAY response)
       if (mem_wresp_o == 0) begin
