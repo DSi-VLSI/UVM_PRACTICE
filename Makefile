@@ -38,7 +38,7 @@ ${BUILD_DIR}/xsim.dir/${intf}_tb_top:
 		echo "Error: Please specify interface type by setting INTF variable to APB or AXI"; exit 1; \
 	fi
 	@cd ${BUILD_DIR}; xvlog -sv -f ${REPO_ROOT}/flist/dut.f -d USE_${INTF}
-	@cd ${BUILD_DIR}; xvlog -sv -f ${REPO_ROOT}/flist/${intf}_tb.f
+	@cd ${BUILD_DIR}; xvlog -sv -f ${REPO_ROOT}/flist/${intf}_tb.f -d USE_${INTF} -L uvm
 	@cd ${BUILD_DIR}; xelab ${intf}_tb_top -s ${intf}_tb_top -debug all
 
 # Run the simulation with specified testbench

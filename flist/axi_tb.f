@@ -1,4 +1,3 @@
--d USE_AXI
 -i ${REPO_ROOT}/include
 -i ${REPO_ROOT}/axi_uart_uvm_tb/include
 ${REPO_ROOT}/package/axi_pkg.sv
@@ -17,4 +16,3 @@ ${REPO_ROOT}/axi_uart_uvm_tb/test/uvm/base_test/components/env.sv
 ${REPO_ROOT}/axi_uart_uvm_tb/test/uvm/base_test/base_test.sv
 ${REPO_ROOT}/axi_uart_uvm_tb/test/uvm/base_test/inheritors/axi_xactn_test/axi_xactn_test.sv
 ${REPO_ROOT}/axi_uart_uvm_tb/test/uvm/axi_tb_top.sv
--L uvm
