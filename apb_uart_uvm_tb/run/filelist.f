@@ -1,4 +1,4 @@
--i ../sim/include
+-i ../../include
 -i ../sim/package
 -i ../sim/test
 -i ../sim/environment
@@ -14,4 +14,4 @@
 ../sim/package/apb_agent_pkg.sv
 ../sim/package/environment_pkg.sv
 ../sim/package/test_pkg.sv
-../sim/tb_top/tb_top.sv
+../sim/tb_top/apb_tb_top.sv

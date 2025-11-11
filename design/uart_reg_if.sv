@@ -5,34 +5,20 @@
 //   Memory-mapped register interface for UART peripheral control and data
 //   transfer. Provides access to control, configuration, status, and FIFO
 //   data registers through a simple memory interface.
-//
-// Register Map:
-//   0x00 - Control Register (RW)       : Clock enable and FIFO flush control
-//   0x04 - Configuration Register (RW) : UART communication parameters
-//   0x08 - Clock Divisor Register (RW) : Baud rate divisor
-//   0x0C - TX FIFO Status (R)          : TX FIFO occupancy count
-//   0x10 - RX FIFO Status (R)          : RX FIFO occupancy count
-//   0x14 - TX FIFO Data (W)            : Write data to transmit
-//   0x20 - RX FIFO Data (R)            : Read and pop received data
-//   0x28 - RX FIFO Peek (R)            : Read received data (non-destructive)
 // ============================================================================
 
-module uart_reg_if #(
+module uart_reg_if
+import base_pkg::REG_CTRL_ADDR;
+import base_pkg::REG_CONFIG_ADDR;
+import base_pkg::REG_CLK_DIV_ADDR;
+import base_pkg::REG_TX_FIFO_STAT_ADDR;
+import base_pkg::REG_RX_FIFO_STAT_ADDR;
+import base_pkg::REG_TX_FIFO_DATA_ADDR;
+import base_pkg::REG_RX_FIFO_DATA_ADDR;
+import base_pkg::REG_RX_FIFO_PEEK_ADDR;
+  #(
     localparam int ADDR_WIDTH = 6,  // Address bus width (supports up to 64 byte address space)
-    localparam int DATA_WIDTH = 32, // Data bus width
-
-    // ========================================================================
-    // Register Addresses
-    // ========================================================================
-
-    localparam int REG_CTRL_ADDR = 6'h00,
-    localparam int REG_CONFIG_ADDR = 6'h04,
-    localparam int REG_CLK_DIV_ADDR = 6'h08,
-    localparam int REG_TX_FIFO_STAT_ADDR = 6'h0C,
-    localparam int REG_RX_FIFO_STAT_ADDR = 6'h10,
-    localparam int REG_TX_FIFO_DATA_ADDR = 6'h14,
-    localparam int REG_RX_FIFO_DATA_ADDR = 6'h18,
-    localparam int REG_RX_FIFO_PEEK_ADDR = 6'h1C
+    localparam int DATA_WIDTH = 32 // Data bus width
 ) (
     // ========================================================================
     // Global Signals

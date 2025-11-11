@@ -27,7 +27,6 @@ module apb_wrapper #(
     output logic [  DATA_W-1:0] mem_wdata,
     output logic [DATA_W/8-1:0] mem_wstrb,
     input  logic [  DATA_W-1:0] mem_rdata,
-    input  logic                mem_radata_valid,
     input  logic                mem_error_i
 );
 
@@ -39,6 +38,7 @@ module apb_wrapper #(
   // space of the internal memory (`generic_mem`). It calculates the required internal
   // address width and subtracts the base address to get the local address.
   localparam ADDR_W_T = MEM_SIZE;
+  assign mem_addr_o = PADDR - BASE_ADDR;
 
   // --- Internal Signals ---
   logic [2:0] slv_err;  // Slave error flags from the error generator
@@ -55,7 +55,6 @@ module apb_wrapper #(
       .PENABLE(PENABLE),
       .PWRITE(PWRITE),
       .error(slv_err[0] | slv_err[1] | mem_error_i),
-      .rdata_valid(mem_radata_valid),
       .prdata_intr(mem_rdata),
       .req(mem_req_o),
       .we(mem_we_o),

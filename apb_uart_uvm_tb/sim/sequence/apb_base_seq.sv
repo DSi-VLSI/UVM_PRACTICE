@@ -13,11 +13,11 @@ class apb_base_seq extends uvm_sequence;
 
     function new(string name = "apb_base_seq");
         super.new(name);
-        `uvm_info(get_full_name(), $sformatf("[Base Sequence] :: Base Sequence Constructed"), UVM_LOW);
+        `uvm_info(get_full_name, $sformatf("[Base Sequence] :: Base Sequence Constructed"), UVM_LOW);
     endfunction
 
     task body();
-        `uvm_info(get_full_name, $sformatf("[Base Sequence] :: Base Sequence Body Inside"), UVM_HIGH);
+        `uvm_info(get_name, $sformatf("[Base Sequence] :: Base Sequence Body Inside"), UVM_HIGH);
     endtask
 
 

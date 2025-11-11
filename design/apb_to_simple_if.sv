@@ -32,7 +32,6 @@ module apb_to_simple_if #(
   logic [  DATA_W-1:0] intr_wdata;
   logic [DATA_W/8-1:0] intr_wstrb;
   logic [  DATA_W-1:0] intr_rdata;
-  logic                intr_radata_valid;
 
   assign mem_we_o = intr_req_o & intr_we_o;
   assign mem_waddr_o = intr_addr_o;
@@ -65,7 +64,6 @@ module apb_to_simple_if #(
       .mem_wdata       (intr_wdata),
       .mem_wstrb       (intr_wstrb),
       .mem_rdata       (intr_rdata),
-      .mem_radata_valid(intr_radata_valid),
       .mem_error_i     (mem_wresp_i[0] | mem_wresp_i[1] | mem_rresp_i[0] | mem_rresp_i[1])
   );
 

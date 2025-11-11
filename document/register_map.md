@@ -8,20 +8,20 @@ This document describes the memory-mapped register interface for the UART periph
 
 | Address | Register Name              | Access | Reset Value  | Description                                    |
 |---------|----------------------------|--------|--------------|------------------------------------------------|
-| 0x00    | Control Register           | RW     | 0x00000000   | Clock and FIFO control                         |
-| 0x04    | Configuration Register     | RW     | 0x00000000   | UART configuration                             |
-| 0x08    | Clock Divisor Register     | RW     | 0x000028B1   | Baud rate generation divisor                   |
-| 0x0C    | TX FIFO Status Register    | R      | 0x00000000   | Transmit FIFO occupancy status                 |
-| 0x10    | RX FIFO Status Register    | R      | 0x00000000   | Receive FIFO occupancy status                  |
-| 0x14    | TX FIFO Data Register      | W      | N/A          | Write data to transmit FIFO                    |
-| 0x18    | RX FIFO Data Register      | R      | N/A          | Read and pop data from receive FIFO            |
-| 0x1C    | RX FIFO Peek Register      | R      | N/A          | Read data from receive FIFO without popping    |
+| 0x00    | CTRL                       | RW     | 0x00000000   | Clock and FIFO control                         |
+| 0x04    | CONFIG                     | RW     | 0x00000000   | UART configuration                             |
+| 0x08    | CLK_DIV                    | RW     | 0x000028B1   | Baud rate generation divisor                   |
+| 0x0C    | TX_FIFO_STAT               | R      | 0x00000000   | Transmit FIFO occupancy status                 |
+| 0x10    | RX_FIFO_STAT               | R      | 0x00000000   | Receive FIFO occupancy status                  |
+| 0x14    | TX_FIFO_DATA               | W      | N/A          | Write data to transmit FIFO                    |
+| 0x18    | RX_FIFO_DATA               | R      | N/A          | Read and pop data from receive FIFO            |
+| 0x1C    | RX_FIFO_PEEK               | R      | N/A          | Read data from receive FIFO without popping    |
 
 ---
 
 ## Detailed Register Descriptions
 
-### UART Control Register (0x00)
+### Control Register (CTRL)
 
 **Address:** 0x00  
 **Reset Value:** 0x00000000  
@@ -38,7 +38,7 @@ This document describes the memory-mapped register interface for the UART periph
 
 ---
 
-### UART Configuration Register (0x04)
+### Configuration Register (CONFIG)
 
 **Address:** 0x04  
 **Reset Value:** 0x00000000  
@@ -56,7 +56,7 @@ This document describes the memory-mapped register interface for the UART periph
 
 ---
 
-### Clock Divisor Register (0x08)
+### Clock Divisor Register (CLK_DIV)
 
 **Address:** 0x08  
 **Reset Value:** 0x000028B1  
@@ -70,7 +70,7 @@ This document describes the memory-mapped register interface for the UART periph
 
 ---
 
-### TX FIFO Status Register (0x0C)
+### TX FIFO Status Register (TX_FIFO_STAT)
 
 **Address:** 0x0C  
 **Reset Value:** 0x00000000  
@@ -82,7 +82,7 @@ This document describes the memory-mapped register interface for the UART periph
 
 ---
 
-### RX FIFO Status Register (0x10)
+### RX FIFO Status Register (RX_FIFO_STAT)
 
 **Address:** 0x10  
 **Reset Value:** 0x00000000  
@@ -94,7 +94,7 @@ This document describes the memory-mapped register interface for the UART periph
 
 ---
 
-### TX FIFO Data Register (0x14)
+### TX FIFO Data Register (TX_FIFO_DATA)
 
 **Address:** 0x14  
 **Access:** Write-Only
@@ -108,7 +108,7 @@ This document describes the memory-mapped register interface for the UART periph
 
 ---
 
-### RX FIFO Data Register (0x18)
+### RX FIFO Data Register (RX_FIFO_DATA)
 
 **Address:** 0x18
 **Access:** Read-Only
@@ -122,7 +122,7 @@ This document describes the memory-mapped register interface for the UART periph
 
 ---
 
-### RX FIFO Peek Register (0x1C)
+### RX FIFO Peek Register (RX_FIFO_PEEK)
 
 **Address:** 0x1C  
 **Access:** Read-Only

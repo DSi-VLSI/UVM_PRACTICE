@@ -12,7 +12,7 @@ class apb_reset_seq extends apb_base_seq;
 
 
     task body();
-        `uvm_info(get_full_name(), $sformatf("[Reset Sequence] :: Reset Sequence Body Inside"), UVM_HIGH);
+        `uvm_info(get_full_name, $sformatf("[Reset Sequence] :: Reset Sequence Body Inside"), UVM_HIGH);
         
         wait_for_grant();
         
@@ -22,7 +22,7 @@ class apb_reset_seq extends apb_base_seq;
         
         send_request(item); 
 
-        `uvm_info(get_full_name(), $sformatf("[Reset Sequence] :: Sending Reset Item Sent"), UVM_HIGH);
+        `uvm_info(get_full_name, $sformatf("[Reset Sequence] :: Sending Reset Item Sent"), UVM_HIGH);
 
         
         wait_for_item_done();

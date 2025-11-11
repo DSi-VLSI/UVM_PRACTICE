@@ -1,5 +1,5 @@
 -d USE_APB
--i ${REPO_ROOT}/apb_uart_uvm_tb/sim/include
+-i ${REPO_ROOT}/include
 -i ${REPO_ROOT}/apb_uart_uvm_tb/sim/package
 -i ${REPO_ROOT}/apb_uart_uvm_tb/sim/test
 -i ${REPO_ROOT}/apb_uart_uvm_tb/sim/environment

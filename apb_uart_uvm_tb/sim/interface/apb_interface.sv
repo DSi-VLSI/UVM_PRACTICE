@@ -1,15 +1,20 @@
 
-`include "typedef.svh"
+`include "apb/typedef.svh"
 
 
-interface apb_interface(input pclk);
+interface apb_interface(input bit pclk);
 
-    `APB_ALL_TYPEDEF(apb, logic [31:0], logic [31:0], logic [3:0])
+    import base_pkg::apb_req_t;
+    import base_pkg::apb_resp_t;
 
     apb_req_t  apb_req;
     apb_resp_t apb_resp;
 
     logic      presetn_i;
     
+
+    // modports for master/driver
+    modport master(input apb_resp, output apb_req);
+    modport slave(input apb_req, output apb_resp);
     
 endinterface //apb_interface

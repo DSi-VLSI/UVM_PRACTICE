@@ -3,9 +3,6 @@
 import uvm_pkg::*;
 import test_pkg::*;
 
-`define USE_APB
-
-
 module apb_tb_top;
 
     bit clk;
@@ -13,8 +10,8 @@ module apb_tb_top;
     initial forever #5 clk = ~clk;
 
     // Interface instances
-    apb_interface apb_inf (.pclk(clk));
-    uart_interface uart_inf (.pclk(clk));
+    apb_interface   apb_inf (.pclk(clk));
+    uart_interface  uart_inf (.pclk(clk));
 
     // DUT instantiation
     uart_top DUT(
@@ -31,7 +28,7 @@ module apb_tb_top;
 
     initial begin
         $dumpfile("waves.vcd");
-        $dumpvars(0, tb_top);
+        $dumpvars(0, apb_tb_top);
 
 
         uvm_config_db #(virtual apb_interface)::set(null, "*", "apb_inf", apb_inf); 

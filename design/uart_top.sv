@@ -183,7 +183,7 @@ module uart_top #(
       .ELEM_WIDTH (8),
       .FIFO_SIZE  (8)
   ) u_tx_fifo (
-      .arst_ni(arst_ni),
+      .arst_ni(arst_ni & ~tx_fifo_flush),
       .elem_in_i(tx_fifo_data),
       .elem_in_clk_i(clk_i),
       .elem_in_valid_i(tx_fifo_data_valid),
@@ -202,7 +202,7 @@ module uart_top #(
       .ELEM_WIDTH (8),
       .FIFO_SIZE  (8)
   ) u_rx_fifo (
-      .arst_ni(arst_ni),
+      .arst_ni(arst_ni & ~rx_fifo_flush),
       .elem_in_i(rx_data),
       .elem_in_clk_i(rx_clk),
       .elem_in_valid_i(rx_data_valid),
