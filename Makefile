@@ -44,11 +44,12 @@ ${BUILD_DIR}/xsim.dir/${intf}_tb_top:
 # Run the simulation with specified testbench
 .PHONY: simulate
 simulate: ${BUILD_DIR}/xsim.dir/${intf}_tb_top
-	@echo -n "--testplusarg UVM_VERBOSITY=${UVM_VERBOSITY} " > ${BUILD_DIR}/testplusargs.txt
-	@echo -n "--testplusarg TESTNAME=${TESTNAME} " >> ${BUILD_DIR}/testplusargs.txt
-	@echo "" >> ${BUILD_DIR}/testplusargs.txt
+	@echo "--testplusarg UVM_VERBOSITY=${UVM_VERBOSITY}" > ${BUILD_DIR}/testplusargs.txt
+	@echo "--testplusarg UVM_TESTNAME=${TESTNAME}" >> ${BUILD_DIR}/testplusargs.txt
 	@make -s logs
-	@cd ${BUILD_DIR}; xsim ${intf}_tb_top ${RUN_TYPE}
+	@cd ${BUILD_DIR}; xsim ${intf}_tb_top ${RUN_TYPE} -f ${BUILD_DIR}/testplusargs.txt
+
+
 
 # Remove build directory and all build artifacts
 .PHONY: clean
