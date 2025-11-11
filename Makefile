@@ -5,6 +5,7 @@
 export REPO_ROOT := ${CURDIR}
 export BUILD_DIR := ${REPO_ROOT}/build
 export LOG_DIR := ${REPO_ROOT}/logs
+REPO_ROOT_MOD := $(shell echo ${CURDIR} | sed 's/\//\\\//g')
 
 UVM_VERBOSITY ?= UVM_HIGH
 TESTNAME ?= base_test
@@ -47,9 +48,11 @@ simulate: ${BUILD_DIR}/xsim.dir/${intf}_tb_top
 	@echo "--testplusarg UVM_VERBOSITY=${UVM_VERBOSITY}" > ${BUILD_DIR}/testplusargs.txt
 	@echo "--testplusarg UVM_TESTNAME=${TESTNAME}" >> ${BUILD_DIR}/testplusargs.txt
 	@make -s logs
-	@cd ${BUILD_DIR}; xsim ${intf}_tb_top ${RUN_TYPE} -f ${BUILD_DIR}/testplusargs.txt
+	@cd ${BUILD_DIR}; xsim ${intf}_tb_top ${RUN_TYPE} -f ${BUILD_DIR}/testplusargs.txt | sed 's/${REPO_ROOT_MOD}/\./g'
 
-
+mypath:
+	@echo "REPO_ROOT : ${REPO_ROOT}"
+	@echo "REPO_ROOT : ${REPO_ROOT_MOD}"
 
 # Remove build directory and all build artifacts
 .PHONY: clean
