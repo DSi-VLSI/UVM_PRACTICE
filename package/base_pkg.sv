@@ -89,4 +89,7 @@ package base_pkg;
   // APB Interface Type
   `APB_TYPEDEF_ALL(apb, addr_t, data_t, strb_t)
 
+  localparam int TX_FIFO_SIZE = 8;
+  localparam int RX_FIFO_SIZE = 8;
+
 endpackage
