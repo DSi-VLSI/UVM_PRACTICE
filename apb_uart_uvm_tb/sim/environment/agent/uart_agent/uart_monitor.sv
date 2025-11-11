@@ -13,23 +13,24 @@ class uart_monitor extends uvm_monitor;
     function void build_phase(uvm_phase phase);
         super.build_phase(phase);
         void'(uvm_config_db #(virtual uart_interface)::get(this, "", "uart_inf", uart_inf));
-        `uvm_info(get_full_name(), "Monitor Build Phase", UVM_LOW);
+        `uvm_info(get_full_name, "Monitor Build Phase", UVM_LOW);
     endfunction
 
 
     function void connect_phase(uvm_phase phase);
         super.connect_phase(phase);
-        `uvm_info(get_name(), "Monitor Connect Phase", UVM_LOW);
+        `uvm_info(get_full_name, "Monitor Connect Phase", UVM_LOW);
     endfunction
 
     task run_phase(uvm_phase phase);
         super.run_phase(phase);
-        `uvm_info(get_name(), "Monitor run phase started", UVM_HIGH);
+        `uvm_info(get_full_name, "Monitor run phase started", UVM_HIGH);
 
         forever begin
             @(posedge uart_inf.pclk);
 
-            `uvm_info(get_name(), $sformatf("[UART Monitor] :: TX: %d, RX: %d, IRQ: %d", uart_inf.tx_o, uart_inf.rx_i, uart_inf.irq_o), UVM_NONE);
+            // `uvm_info(get_full_name, $sformatf("[UART Monitor] :: TX: %d, RX: %d, IRQ: %d", uart_inf.tx_o, uart_inf.rx_i, uart_inf.irq_o), UVM_NONE);
+            $display("[UART Monitor] :: TX: %d, RX: %d, IRQ: %d", uart_inf.tx_o, uart_inf.rx_i, uart_inf.irq_o);
             
         end
 

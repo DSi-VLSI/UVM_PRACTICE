@@ -8,6 +8,13 @@ export LOG_DIR := ${REPO_ROOT}/logs
 
 UVM_VERBOSITY ?= UVM_HIGH
 TESTNAME ?= base_test
+GUI ?= 0
+
+ifeq ($(GUI), 1)
+RUN_TYPE := -gui
+else
+RUN_TYPE := -runall
+endif
 
 # Convert INTF variable to lowercase and remove spaces for file paths
 intf = $(shell echo ${INTF} | tr '[:upper:]' '[:lower:]' | sed 's/ //g')
@@ -41,7 +48,7 @@ simulate: ${BUILD_DIR}/xsim.dir/${intf}_tb_top
 	@echo -n "--testplusarg TESTNAME=${TESTNAME} " >> ${BUILD_DIR}/testplusargs.txt
 	@echo "" >> ${BUILD_DIR}/testplusargs.txt
 	@make -s logs
-	@cd ${BUILD_DIR}; xsim ${intf}_tb_top --runall
+	@cd ${BUILD_DIR}; xsim ${intf}_tb_top ${RUN_TYPE}
 
 # Remove build directory and all build artifacts
 .PHONY: clean

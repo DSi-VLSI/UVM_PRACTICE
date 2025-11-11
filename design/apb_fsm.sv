@@ -11,7 +11,7 @@ typedef enum logic [1:0] {
 module apb_fsm #(
     parameter int DATA_W = 64
 ) (
-    input PCLK, PRESETn, PSELx, PENABLE, PWRITE, error, rdata_valid,
+    input PCLK, PRESETn, PSELx, PENABLE, PWRITE, error,
     input logic [DATA_W-1:0] prdata_intr,
     output reg req, we, 
     output reg PREADY,
@@ -37,7 +37,7 @@ module apb_fsm #(
         case (state)
             IDLE:   next_state  = (PSELx & ~PENABLE) ? SETUP : IDLE;
             SETUP:  next_state  = PSELx & PENABLE ? ACCESS : SETUP;
-            ACCESS: next_state  = rdata_valid ? (PSELx ? SETUP : IDLE) : ACCESS;
+            ACCESS: next_state  = PSELx ? SETUP : IDLE;
             default: next_state = IDLE;
         endcase
     end
@@ -61,10 +61,10 @@ module apb_fsm #(
             end
             ACCESS: begin
                 req     = '1;                                  // Signal a request to the internal memory/logic
-                we      = error ? 0 : PWRITE;                   // Drive write enable, but not if there's an error
-                PREADY  = rdata_valid;                          // PREADY is asserted when data is ready (for reads) or write is complete
-                PSLVERR = rdata_valid & error;                       // PSLVERR is asserted in the same cycle as PREADY if an error occurred
-                PRDATA  = rdata_valid & ~PWRITE ? prdata_intr : 'z; // Drive read data only on the last cycle of a read transfer
+                we      = PWRITE;                   // Drive write enable, but not if there's an error
+                PREADY  = 1;                                  // PREADY is asserted when data is ready (for reads) or write is complete
+                PSLVERR = error;                       // PSLVERR is asserted in the same cycle as PREADY if an error occurred
+                PRDATA  = PWRITE ? 'z : prdata_intr; // Drive read data only on the last cycle of a read transfer
             end
             default: begin
                 req     = '0;
