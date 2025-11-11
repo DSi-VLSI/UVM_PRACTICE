@@ -37,7 +37,7 @@ package base_pkg;
       logic        STOP_BITS;       // [2] Stop Bit Configuration
       logic        RX_INT_EN;       // [3] RX Interrupt Enable
       logic [27:0] Reserved;        // [31:4] Reserved
-  } config_reg_t;
+  } cfg_reg_t;
 
   // Clock Divisor Register (CLK_DIV) - 0x08
   typedef struct packed {

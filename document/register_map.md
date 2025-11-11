@@ -9,7 +9,7 @@ This document describes the memory-mapped register interface for the UART periph
 | Address | Register Name              | Access | Reset Value  | Description                                    |
 |---------|----------------------------|--------|--------------|------------------------------------------------|
 | 0x00    | CTRL                       | RW     | 0x00000000   | Clock and FIFO control                         |
-| 0x04    | CONFIG                     | RW     | 0x00000000   | UART configuration                             |
+| 0x04    | CFG                        | RW     | 0x00000000   | UART configuration                             |
 | 0x08    | CLK_DIV                    | RW     | 0x000028B1   | Baud rate generation divisor                   |
 | 0x0C    | TX_FIFO_STAT               | R      | 0x00000000   | Transmit FIFO occupancy status                 |
 | 0x10    | RX_FIFO_STAT               | R      | 0x00000000   | Receive FIFO occupancy status                  |
@@ -38,7 +38,7 @@ This document describes the memory-mapped register interface for the UART periph
 
 ---
 
-### Configuration Register (CONFIG)
+### Configuration Register (CFG)
 
 **Address:** 0x04  
 **Reset Value:** 0x00000000  

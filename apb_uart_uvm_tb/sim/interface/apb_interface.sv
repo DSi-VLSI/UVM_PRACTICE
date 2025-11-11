@@ -10,9 +10,8 @@ interface apb_interface(input bit pclk);
     apb_req_t  apb_req;
     apb_resp_t apb_resp;
 
-    logic      presetn_i;
+    logic      presetn;
     
-
     // modports for master/driver
     modport master(input apb_resp, output apb_req);
     modport slave(input apb_req, output apb_resp);

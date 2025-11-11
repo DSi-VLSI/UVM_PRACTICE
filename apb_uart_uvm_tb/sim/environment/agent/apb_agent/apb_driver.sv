@@ -52,7 +52,7 @@ class apb_driver extends uvm_driver #(seq_item);
         apb_inf.apb_req.paddr    = 0;
         apb_inf.apb_req.pwdata   = 0;
         apb_inf.apb_req.pstrb    = 0;
-        apb_inf.apb_req.prot     = 0;
+        apb_inf.apb_req.pprot    = 0;
         apb_inf.presetn          = 1'b0;
         
         @(posedge apb_inf.pclk);

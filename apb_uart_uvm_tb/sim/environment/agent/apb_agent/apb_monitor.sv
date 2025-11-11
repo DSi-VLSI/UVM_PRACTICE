@@ -30,7 +30,7 @@ class apb_monitor extends uvm_monitor;
             @(posedge apb_inf.pclk);
             // `uvm_info(get_name, $sformatf("[APB Monitor] :: PADDR: %0d, PWDATA: %0d, PSTRB: %0d, PWRITE: %d", apb_inf.apb_req.paddr, apb_inf.apb_req.pwdata, apb_inf.apb_req.pstrb, apb_inf.apb_req.pwrite_i), UVM_NONE)
 
-            $display("[APB Monitor] :: PADDR: %0d, PWDATA: %0d, PSTRB: %0d, PWRITE: %d | PRDATA: %0d", apb_inf.apb_req.paddr, apb_inf.apb_req.pwdata, apb_inf.apb_req.pstrb, apb_inf.apb_req.pwrite, apb_inf.apb_resp.prdata_o);
+            $display("[APB Monitor] :: PADDR: %0d, PWDATA: %0d, PSTRB: %0d, PWRITE: %d | PRDATA: %0d", apb_inf.apb_req.paddr, apb_inf.apb_req.pwdata, apb_inf.apb_req.pstrb, apb_inf.apb_req.pwrite, apb_inf.apb_resp.prdata);
             
         end
 

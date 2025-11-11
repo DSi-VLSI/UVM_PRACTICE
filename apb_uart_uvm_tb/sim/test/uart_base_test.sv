@@ -13,13 +13,17 @@ class uart_base_test extends uvm_test;
     import base_pkg::REG_RX_FIFO_PEEK_ADDR;
 
     import base_pkg::ctrl_reg_t;
-    import base_pkg::config_reg_t;
+    import base_pkg::cfg_reg_t;
     import base_pkg::clk_div_reg_t;
     import base_pkg::tx_fifo_stat_reg_t;
     import base_pkg::rx_fifo_stat_reg_t;
     import base_pkg::tx_fifo_data_reg_t;
     import base_pkg::rx_fifo_data_reg_t;
     import base_pkg::rx_fifo_peek_reg_t;
+
+    import base_pkg::addr_t;
+    import base_pkg::data_t;
+    import base_pkg::strb_t;
 
     `uvm_component_utils(uart_base_test)
 
@@ -56,7 +60,7 @@ class uart_base_test extends uvm_test;
         `uvm_info(get_full_name, "Base Test run phase finished, objection dropped.", UVM_LOW)
     endtask
 
-    task write(bit random, addr_width_t paddr, data_width_t pwdata, strb_width_t pstrb);
+    task write(bit random, addr_t paddr, data_t pwdata, strb_t pstrb);
         write_seq = apb_write_seq::type_id::create("write_seq");
         write_seq.pwdata = pwdata;
         write_seq.paddr = paddr;
@@ -70,7 +74,7 @@ class uart_base_test extends uvm_test;
         reset_seq.start(env.apb_agnt.apb_seqr); 
     endtask
 
-    task read(bit random, addr_width_t paddr);
+    task read(bit random, addr_t paddr);
         read_seq = apb_read_seq::type_id::create("read_seq");
         read_seq.paddr = paddr;
         read_seq.isRandom = random;

@@ -15,7 +15,7 @@ module apb_tb_top;
 
     // DUT instantiation
     uart_top DUT(
-        .arst_ni(apb_inf.presetn_i),
+        .arst_ni(apb_inf.presetn),
         .clk_i(apb_inf.pclk),
         .req_i(apb_inf.apb_req),
         .resp_o(apb_inf.apb_resp),
