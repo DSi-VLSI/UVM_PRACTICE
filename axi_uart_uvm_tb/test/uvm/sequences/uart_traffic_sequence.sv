@@ -4,8 +4,6 @@ class uart_traffic_sequence extends uvm_sequence;
 
     `uvm_object_utils(uart_traffic_sequence)
 
-    int xactn_len = 0;
-
     function new(string name="uart_traffic_sequence");
         super.new(name);
     endfunction

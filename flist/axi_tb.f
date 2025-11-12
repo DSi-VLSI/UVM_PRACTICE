@@ -3,6 +3,7 @@
 ${REPO_ROOT}/package/axi_pkg.sv
 ${REPO_ROOT}/package/base_pkg.sv
 ${REPO_ROOT}/package/cf_math_pkg.sv
+${REPO_ROOT}/axi_uart_uvm_tb/src/axi_uart_tb_pkg.sv
 ${REPO_ROOT}/axi_uart_uvm_tb/interface/axi_intf.sv
 ${REPO_ROOT}/axi_uart_uvm_tb/interface/uart_intf.sv
 ${REPO_ROOT}/axi_uart_uvm_tb/interface/reset_intf.sv

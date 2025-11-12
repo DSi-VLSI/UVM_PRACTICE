@@ -17,15 +17,11 @@ class uart_monitor extends uvm_monitor;
     logic previous_rx;
     logic rx;
 
-    int baud_divisor = 10417;
-
-    typedef logic [15:0] serial_to_parallel_t;
     serial_to_parallel_t tx_array;
     serial_to_parallel_t rx_array;
     int tx_counter;
     int rx_counter;
 
-    typedef enum {IDLE, START, DATA, STOP} uart_state_t;
     uart_state_t tx_state;
     uart_state_t rx_state;
 
