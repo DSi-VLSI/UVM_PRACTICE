@@ -24,19 +24,19 @@ package base_pkg;
 
   // Control Register (CTRL) - 0x00
     typedef struct packed {
-      logic        CLK_EN;          // [0] Clock Enable
-      logic        TX_FIFO_FLUSH;   // [1] Flush TX FIFO
-      logic        RX_FIFO_FLUSH;   // [2] Flush RX FIFO
       logic [28:0] Reserved;        // [31:3] Reserved
+      logic        RX_FIFO_FLUSH;   // [2] Flush RX FIFO
+      logic        TX_FIFO_FLUSH;   // [1] Flush TX FIFO
+      logic        CLK_EN;          // [0] Clock Enable
   } ctrl_reg_t;
 
   // Configuration Register (CONFIG) - 0x04
   typedef struct packed {
-      logic        PARITY_EN;       // [0] Enable Parity Checking
-      logic        PARITY_TYPE;     // [1] Parity Type (0: Even, 1: Odd)
-      logic        STOP_BITS;       // [2] Stop Bit Configuration
-      logic        RX_INT_EN;       // [3] RX Interrupt Enable
       logic [27:0] Reserved;        // [31:4] Reserved
+      logic        RX_INT_EN;       // [3] RX Interrupt Enable
+      logic        STOP_BITS;       // [2] Stop Bit Configuration
+      logic        PARITY_TYPE;     // [1] Parity Type (0: Even, 1: Odd)
+      logic        PARITY_EN;       // [0] Enable Parity Checking
   } cfg_reg_t;
 
   // Clock Divisor Register (CLK_DIV) - 0x08
@@ -56,20 +56,20 @@ package base_pkg;
 
   // TX FIFO Data Register (TX_FIFO_DATA) - 0x14
   typedef struct packed {
-      logic [7:0]  TX_DATA;         // [7:0] Data byte to be transmitted
       logic [23:0] Reserved;        // [31:8] Reserved
+      logic [7:0]  TX_DATA;         // [7:0] Data byte to be transmitted
   } tx_fifo_data_reg_t;
 
   // RX FIFO Data Register (RX_FIFO_DATA) - 0x18
   typedef struct packed {
-      logic [7:0]  RX_DATA;         // [7:0] Received data byte
       logic [23:0] Reserved;        // [31:8] Reserved
+      logic [7:0]  RX_DATA;         // [7:0] Received data byte
   } rx_fifo_data_reg_t;
 
   // RX FIFO Peek Register (RX_FIFO_PEEK) - 0x1C
   typedef struct packed {
-      logic [7:0]  RX_PEEK_DATA;    // [7:0] Received data byte (non-destructive read)
       logic [23:0] Reserved;        // [31:8] Reserved
+      logic [7:0]  RX_PEEK_DATA;    // [7:0] Received data byte (non-destructive read)
   } rx_fifo_peek_reg_t;
 
   localparam int ID_WIDTH   = 2;

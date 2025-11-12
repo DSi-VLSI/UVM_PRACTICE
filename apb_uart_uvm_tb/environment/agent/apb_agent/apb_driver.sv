@@ -16,18 +16,18 @@ class apb_driver extends uvm_driver #(seq_item);
     function void build_phase(uvm_phase phase);
         super.build_phase(phase);
         void'(uvm_config_db #(virtual apb_interface)::get(this, "", "apb_inf", apb_inf));
-        `uvm_info(get_full_name, "Driver Build Phase", UVM_LOW);
+        `uvm_info("", "Driver Build Phase", UVM_LOW);
     endfunction
 
 
     function void connect_phase(uvm_phase phase);
         super.connect_phase(phase);
-        `uvm_info(get_full_name, "Driver Connect Phase", UVM_LOW);
+        `uvm_info("", "Driver Connect Phase", UVM_LOW);
     endfunction
 
     task run_phase(uvm_phase phase);
         super.run_phase(phase);
-        `uvm_info(get_full_name, "Driver run phase started", UVM_HIGH);
+        `uvm_info("", "Driver run phase started", UVM_HIGH);
 
         forever begin
             seq_item_port.get_next_item(item);
@@ -88,7 +88,6 @@ class apb_driver extends uvm_driver #(seq_item);
         end
 
 
-        @(posedge apb_inf.pclk);
         apb_inf.apb_req.penable = 1'b0;
         apb_inf.apb_req.psel = 1'b0;
 
