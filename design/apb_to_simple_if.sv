@@ -41,6 +41,8 @@ module apb_to_simple_if #(
   assign mem_re_o = intr_req_o & ~intr_we_o;
   assign mem_raddr_o = intr_addr_o;
 
+  assign intr_rdata = mem_rdata_i;
+
   apb_wrapper #(
       .ADDR_W   (ADDR_W),
       .DATA_W   (DATA_W),

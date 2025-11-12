@@ -1,7 +1,7 @@
 ### All Registers
 ```SV
 import base_pkg::REG_CTRL_ADDR;
-import base_pkg::REG_CONFIG_ADDR;
+import base_pkg::REG_CFG_ADDR;
 import base_pkg::REG_CLK_DIV_ADDR;
 import base_pkg::REG_TX_FIFO_STAT_ADDR;
 import base_pkg::REG_RX_FIFO_STAT_ADDR;

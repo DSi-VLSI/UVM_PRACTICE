@@ -7,7 +7,7 @@ module apb_tb_top;
 
     bit clk;
 
-    initial forever #5 clk = ~clk;
+    initial forever #5ns clk = ~clk;
 
     // Interface instances
     apb_interface   apb_inf (.pclk(clk));
@@ -30,6 +30,8 @@ module apb_tb_top;
         $dumpfile("waves.vcd");
         $dumpvars(0, apb_tb_top);
 
+        // TODO REMOVE THIS
+        force uart_inf.rx_i = uart_inf.tx_o;
 
         uvm_config_db #(virtual apb_interface)::set(null, "*", "apb_inf", apb_inf); 
         uvm_config_db #(virtual uart_interface)::set(null, "*", "uart_inf", uart_inf); 

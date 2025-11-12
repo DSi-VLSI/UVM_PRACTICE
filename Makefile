@@ -2,14 +2,14 @@
 .SHELL := /bin/bash
 
 # Export environment variables for use in build scripts
-export REPO_ROOT := ${CURDIR}
-export BUILD_DIR := ${REPO_ROOT}/build
-export LOG_DIR := ${REPO_ROOT}/logs
-REPO_ROOT_MOD := $(shell echo ${CURDIR} | sed 's/\//\\\//g')
+export REPO_ROOT 	:= ${CURDIR}
+export BUILD_DIR 	:= ${REPO_ROOT}/build
+export LOG_DIR 		:= ${REPO_ROOT}/logs
+REPO_ROOT_MOD 		:= $(shell echo ${CURDIR} | sed 's/\//\\\//g')
 
-UVM_VERBOSITY ?= UVM_HIGH
-TESTNAME ?= base_test
-GUI ?= 0
+UVM_VERBOSITY 	?= UVM_HIGH
+TESTNAME 		?= base_test
+GUI 			?= 0
 
 ifeq ($(GUI), 1)
 RUN_TYPE := -gui

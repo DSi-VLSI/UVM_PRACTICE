@@ -12,22 +12,22 @@ class uart_driver extends uvm_driver #(seq_item);
     function new(string name = "uart_driver", uvm_component parent = null);
         super.new(name, parent);
         void'(uvm_config_db #(virtual uart_interface)::get(this, "", "uart_inf", uart_inf));
-        `uvm_info(get_full_name, "Driver Constructed", UVM_LOW);
+        `uvm_info("", "Driver Constructed", UVM_LOW);
     endfunction
 
     function void build_phase(uvm_phase phase);
         super.build_phase(phase);
-        `uvm_info(get_full_name, "Driver Build Phase", UVM_LOW);
+        `uvm_info("", "Driver Build Phase", UVM_LOW);
     endfunction
 
     function void connect_phase(uvm_phase phase);
         super.connect_phase(phase);
-        `uvm_info(get_full_name, "Driver Connect Phase", UVM_LOW);
+        `uvm_info("", "Driver Connect Phase", UVM_LOW);
     endfunction
 
     task run_phase(uvm_phase phase);
         super.run_phase(phase);
-        `uvm_info(get_full_name, "Driver run phase started", UVM_HIGH);
+        `uvm_info("", "Driver run phase started", UVM_HIGH);
 
         
 

@@ -9,7 +9,7 @@
 
 module uart_reg_if
 import base_pkg::REG_CTRL_ADDR;
-import base_pkg::REG_CONFIG_ADDR;
+import base_pkg::REG_CFG_ADDR;
 import base_pkg::REG_CLK_DIV_ADDR;
 import base_pkg::REG_TX_FIFO_STAT_ADDR;
 import base_pkg::REG_RX_FIFO_STAT_ADDR;
@@ -107,7 +107,7 @@ import base_pkg::REG_RX_FIFO_PEEK_ADDR;
           mem_wresp_o = 2'b00;  // OKAY
         end
 
-        REG_CONFIG_ADDR: begin
+        REG_CFG_ADDR: begin
           // Configuration register: Only writable when both FIFOs are empty
           // This prevents changing UART parameters mid-transaction
           if (tx_fifo_count_i == 0 && rx_fifo_count_i == 0) begin
@@ -154,7 +154,7 @@ import base_pkg::REG_RX_FIFO_PEEK_ADDR;
           mem_rdata_o = {'0, rx_fifo_flush_o, tx_fifo_flush_o, ctrl_clk_en_o};
         end
 
-        REG_CONFIG_ADDR: begin
+        REG_CFG_ADDR: begin
           // Read configuration register
           mem_rresp_o = 2'b00;  // OKAY
           mem_rdata_o = {'0, cfg_rx_int_en_o, cfg_stop_bits_o, cfg_parity_type_o, cfg_parity_en_o};
@@ -228,7 +228,7 @@ import base_pkg::REG_RX_FIFO_PEEK_ADDR;
             rx_fifo_flush_o <= mem_wdata_i[2];  // Bit 2: RX FIFO flush
           end
 
-          REG_CONFIG_ADDR: begin
+          REG_CFG_ADDR: begin
             // Update configuration register fields
             cfg_parity_en_o   <= mem_wdata_i[0];  // Bit 0: Parity enable
             cfg_parity_type_o <= mem_wdata_i[1];  // Bit 1: Parity type

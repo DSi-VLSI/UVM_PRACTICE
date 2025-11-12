@@ -12,7 +12,7 @@ class apb_write_seq extends apb_base_seq;
 
 
     task body();
-        `uvm_info(get_full_name, $sformatf("[Write Sequence] :: Write Sequence Body Inside"), UVM_HIGH);
+        `uvm_info("", $sformatf("[Write Sequence] :: Write Sequence Body Inside"), UVM_HIGH);
         
         wait_for_grant();
         
@@ -29,7 +29,7 @@ class apb_write_seq extends apb_base_seq;
         
         send_request(item); 
 
-        `uvm_info(get_full_name, $sformatf("[Write Sequence] :: Sending Write Item Sent - Addr: 0x%0h, Data: 0x%0h", item.paddr, item.pwdata), UVM_HIGH);
+        `uvm_info("", $sformatf("[Write Sequence] :: Sending Write Item Sent - Addr: 0x%0h, Data: 0x%0h", item.paddr, item.pwdata), UVM_HIGH);
 
         wait_for_item_done();
 

@@ -32,7 +32,7 @@ module clk_div #(
       // Increment the counter.
       counter_n = counter_q + 1;
       // If the counter reaches the divisor value, reset it to 0.
-      if (counter_n == div_i) begin
+      if (counter_n >= div_i) begin
         counter_n = '0;
       end
     end
