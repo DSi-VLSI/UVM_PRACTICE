@@ -14,7 +14,7 @@ class uart_traffic_sequence extends uvm_sequence;
         dut_seq_item item;
 
         empty_item(item);
-        read_modify_write(item, 8'h14, 16'h5b, 4'hf);
+        read_modify_write(item, 8'h14, 16'h9b, 4'hf);
     endtask
  
     task read_modify_write (dut_seq_item item, int addr, logic [31:0] wdata, logic [3:0] strb);
