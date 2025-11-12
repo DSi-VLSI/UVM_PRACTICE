@@ -32,6 +32,8 @@ module axi_tb_top;
         .irq_o          (u_uart_intf.irq)           
     );
 
+    assign u_uart_intf.rx = u_uart_intf.tx;  // TODO: LAKSHMEE
+
     task automatic start_clk(int clk_freq_MHz);
         real time_period;
         time_period = 1000 / clk_freq_MHz;

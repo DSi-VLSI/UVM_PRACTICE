@@ -1,12 +1,12 @@
 `include "dependencies.svh"
 
-class uart_config_sequence extends uvm_sequence;
+class uart_traffic_sequence extends uvm_sequence;
 
-    `uvm_object_utils(uart_config_sequence)
+    `uvm_object_utils(uart_traffic_sequence)
 
     int xactn_len = 0;
 
-    function new(string name="uart_config_sequence");
+    function new(string name="uart_traffic_sequence");
         super.new(name);
     endfunction
 
@@ -14,7 +14,7 @@ class uart_config_sequence extends uvm_sequence;
         dut_seq_item item;
 
         empty_item(item);
-        read_modify_write(item, 8'h00, 16'h1, 4'hf);
+        read_modify_write(item, 8'h14, 16'h5b, 4'hf);
     endtask
  
     task read_modify_write (dut_seq_item item, int addr, logic [31:0] wdata, logic [3:0] strb);
