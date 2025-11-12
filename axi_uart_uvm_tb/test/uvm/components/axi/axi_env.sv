@@ -9,17 +9,22 @@ class axi_env extends uvm_env;
     endfunction
 
     axi_agent       u_axi_agent;
+    uart_agent      u_uart_agent;
     axi_scoreboard  u_axi_scoreboard;
+    
 
     virtual function void build_phase(uvm_phase phase);
         super.build_phase(phase);
         u_axi_agent         = axi_agent::type_id::create("u_axi_agent", this);
+        u_uart_agent        = uart_agent::type_id::create("u_uart_agent", this);
         u_axi_scoreboard    = axi_scoreboard::type_id::create("u_axi_scoreboard", this);
     endfunction
 
     virtual function void connect_phase(uvm_phase phase);
         super.connect_phase(phase);
         u_axi_agent.u_axi_monitor.mon_analysis_port.connect(u_axi_scoreboard.m_analysis_imp);
+        u_uart_agent.u_uart_monitor.tx_analysis_port.connect(u_axi_scoreboard.uart_tx_analysis_imp);
+        u_uart_agent.u_uart_monitor.rx_analysis_port.connect(u_axi_scoreboard.uart_rx_analysis_imp);
     endfunction
 
 endclass
