@@ -27,7 +27,7 @@ class {class_name} extends {base_class} #();
     endfunction
 
     virtual task run_phase(uvm_phase phase);
-        super.run_phase(phase)
+        super.run_phase(phase);
     endtask
 
 endclass
@@ -120,7 +120,7 @@ class {class_name} extends {base_class};
     endfunction
 
     virtual task run_phase(uvm_phase phase);
-        super.run_phase(phase)
+        super.run_phase(phase);
     endtask
 
 endclass
@@ -144,7 +144,7 @@ class {class_name} extends {base_class};
     endfunction
 
     virtual task run_phase(uvm_phase phase);
-        super.run_phase(phase)
+        super.run_phase(phase);
     endtask
 
 endclass

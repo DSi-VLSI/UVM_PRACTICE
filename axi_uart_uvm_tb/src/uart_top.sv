@@ -5,9 +5,6 @@
 //   Includes register interface, TX/RX modules, clock dividers, and CDC FIFOs
 //   for crossing clock domains between the system clock and UART baud clock.
 //******************************************************************************
-
-// `define USE_AXI_IF
-
 module uart_top #(
 `ifdef USE_AXI
     parameter type req_t  = base_pkg::axi_req_t,   // AXI request type
@@ -15,9 +12,6 @@ module uart_top #(
 `elsif USE_APB
     parameter type req_t  = base_pkg::apb_req_t,   // APB request type
     parameter type resp_t = base_pkg::apb_resp_t,  // APB response type
-`else
-    parameter type req_t  = logic,  // APB request type
-    parameter type resp_t = logic,  // APB response type
 `endif
   localparam int MEM_SIZE = 6,      // Register address width (64 byte address space)
   localparam int DATA_WIDTH = 32    // Data bus width
@@ -33,6 +27,12 @@ module uart_top #(
     input  logic rx_i,   // UART receive input
     output logic irq_o   // Interrupt output (RX data ready)
 );
+
+  //----------------------------------------------------------------------------
+  // Import FIFO sizes from base package
+  //----------------------------------------------------------------------------
+  import base_pkg::TX_FIFO_SIZE;
+  import base_pkg::RX_FIFO_SIZE;
 
   //----------------------------------------------------------------------------
   // Memory-mapped interface signals (between bus converter and register IF)
@@ -90,6 +90,18 @@ module uart_top #(
   //----------------------------------------------------------------------------
   logic tx_clk;  // TX baud clock (clk_i / clk_div)
   logic rx_clk;  // RX oversampling clock (8x TX baud clock)
+
+  //----------------------------------------------------------------------------
+  // FIFO Count Temporary Signals
+  //----------------------------------------------------------------------------
+  logic [TX_FIFO_SIZE-1:0] tx_fifo_count_temp;
+  logic [RX_FIFO_SIZE-1:0] rx_fifo_count_temp;
+
+  //============================================================================
+  // FIFO Count Assignments
+  //============================================================================
+  assign tx_fifo_count = tx_fifo_count_temp;
+  assign rx_fifo_count = rx_fifo_count_temp;
 
   //============================================================================
   // Bus-to-Memory Interface Converter
@@ -187,17 +199,19 @@ module uart_top #(
   //============================================================================
   cdc_fifo #(
       .ELEM_WIDTH (8),
-      .FIFO_SIZE  (8)
+      .FIFO_SIZE  (TX_FIFO_SIZE)
   ) u_tx_fifo (
-      .arst_ni(arst_ni),
+      .arst_ni(arst_ni & ~tx_fifo_flush),
       .elem_in_i(tx_fifo_data),
       .elem_in_clk_i(clk_i),
       .elem_in_valid_i(tx_fifo_data_valid),
       .elem_in_ready_o(tx_fifo_data_ready),
+      .elem_in_count_o(tx_fifo_count_temp),
       .elem_out_o(tx_data),
       .elem_out_clk_i(tx_clk),
       .elem_out_valid_o(tx_data_valid),
-      .elem_out_ready_i(tx_data_ready)
+      .elem_out_ready_i(tx_data_ready),
+      .elem_out_count_o()
   );
 
   //============================================================================
@@ -206,17 +220,19 @@ module uart_top #(
   //============================================================================
   cdc_fifo #(
       .ELEM_WIDTH (8),
-      .FIFO_SIZE  (8)
+      .FIFO_SIZE  (RX_FIFO_SIZE)
   ) u_rx_fifo (
-      .arst_ni(arst_ni),
+      .arst_ni(arst_ni & ~rx_fifo_flush),
       .elem_in_i(rx_data),
       .elem_in_clk_i(rx_clk),
       .elem_in_valid_i(rx_data_valid),
       .elem_in_ready_o(),
+      .elem_in_count_o(),
       .elem_out_o(rx_fifo_data),
       .elem_out_clk_i(clk_i),
       .elem_out_valid_o(rx_fifo_data_valid),
-      .elem_out_ready_i(rx_fifo_data_ready)
+      .elem_out_ready_i(rx_fifo_data_ready),
+      .elem_out_count_o(rx_fifo_count_temp)
   );
 
   //============================================================================
