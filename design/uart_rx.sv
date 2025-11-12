@@ -54,7 +54,7 @@ module uart_rx (
       if (~counter_en && current_state == IDLE && found_negedge) begin
         counter_en <= 1'b1;
       end
-      if (counter_en && current_state == STOP_BIT) begin
+      if (counter_en && current_state == STOP_BIT && counter == 4) begin
         counter_en <= 1'b0;
       end
     end

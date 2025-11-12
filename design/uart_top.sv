@@ -247,7 +247,7 @@ module uart_top #(
   //============================================================================
   uart_tx u_tx (
     .arst_ni(arst_ni),
-    .clk_i(clk_i & ctrl_clk_en),
+    .clk_i(tx_clk & ctrl_clk_en),
     .cfg_parity_en_i(cfg_parity_en),
     .cfg_parity_type_i(cfg_parity_type),
     .cfg_stop_bits_i(cfg_stop_bits),
@@ -263,7 +263,7 @@ module uart_top #(
 //============================================================================
 uart_rx u_rx (
     .arst_ni(arst_ni),
-    .clk_i(clk_i & ctrl_clk_en),
+    .clk_i(rx_clk & ctrl_clk_en),
     .cfg_parity_en_i(cfg_parity_en),
     .cfg_parity_type_i(cfg_parity_type),
     .cfg_stop_bits_i(cfg_stop_bits),

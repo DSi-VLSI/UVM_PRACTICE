@@ -26,7 +26,7 @@ class uart_basic_test extends uart_base_test;
         // Initialize UART Control Register
         ctl_reg.CLK_EN = 'b1;
         ctl_reg.TX_FIFO_FLUSH = 'b0;
-        ctl_reg.RX_FIFO_FLUSH = 'b1;
+        ctl_reg.RX_FIFO_FLUSH = 'b0;
         ctl_reg.Reserved = '0;
 
 
@@ -38,7 +38,7 @@ class uart_basic_test extends uart_base_test;
         cfg_reg.Reserved = '0;
         
         // Initialize UART Clock Divider Register
-        clk_div_reg.CLK_DIV = 'd26; // Assuming a clock divider value of 26
+        clk_div_reg.CLK_DIV = 868; // Assuming a clock divider value of 868 for baud 115200 with a 100MHz clock
 
         // Initialize UART TX FIFO Data Register
         tx_fifo_data_reg.TX_DATA = 'b10111010; // Example data to transmit
@@ -61,13 +61,13 @@ class uart_basic_test extends uart_base_test;
         
         reset();
         write(1'b0, REG_CTRL_ADDR, {ctl_reg}, 'b1111);
-        write(1'b0, REG_CONFIG_ADDR, {cfg_reg}, 'b1111);
+        write(1'b0, REG_CFG_ADDR, {cfg_reg}, 'b1111);
         write(1'b0, REG_CLK_DIV_ADDR, {clk_div_reg}, 'b1111);
         write(1'b0, REG_TX_FIFO_DATA_ADDR, {tx_fifo_data_reg}, 'b1111);
 
         read(1'b0, REG_TX_FIFO_STAT_ADDR);
 
-        #100;
+        #150us;
     
         phase.drop_objection(this);
         `uvm_info("", "Basic Test run phase finished, objection dropped.", UVM_LOW);

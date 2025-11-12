@@ -14,7 +14,7 @@ package base_pkg;
   //   0x28 - RX FIFO Peek (R)            : Read received data (non-destructive)
 
   localparam int REG_CTRL_ADDR = 6'h00;
-  localparam int REG_CONFIG_ADDR = 6'h04;
+  localparam int REG_CFG_ADDR = 6'h04;
   localparam int REG_CLK_DIV_ADDR = 6'h08;
   localparam int REG_TX_FIFO_STAT_ADDR = 6'h0C;
   localparam int REG_RX_FIFO_STAT_ADDR = 6'h10;
