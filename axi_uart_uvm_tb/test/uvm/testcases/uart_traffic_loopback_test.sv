@@ -1,9 +1,9 @@
 `include "dependencies.svh"
 
-class uart_traffic_test extends base_test;
-    `uvm_component_utils(uart_traffic_test)
+class uart_traffic_loopback_test extends base_test;
+    `uvm_component_utils(uart_traffic_loopback_test)
 
-    function new(string name="uart_traffic_test", uvm_component parent = null);
+    function new(string name="uart_traffic_loopback_test", uvm_component parent = null);
         super.new(name, parent);
     endfunction
 
