@@ -18,20 +18,20 @@ class apb_agent extends uvm_agent;
         apb_drvr = apb_driver::type_id::create("apb_drvr", this);
         apb_mntr = apb_monitor::type_id::create("apb_mntr", this);
         apb_seqr = apb_sequencer::type_id::create("apb_seqr", this);
-        `uvm_info("", "Agent Build Phase", UVM_LOW);
+        `uvm_info("APB_Agent", "Build", UVM_DEBUG);
     endfunction
 
 
     function void connect_phase(uvm_phase phase);
         super.connect_phase(phase);
         apb_drvr.seq_item_port.connect(apb_seqr.seq_item_export);
-        `uvm_info("", "Agent Connect Phase", UVM_LOW);
+        `uvm_info("APB_Agent", "Connected", UVM_DEBUG);
     endfunction
 
     task run_phase(uvm_phase phase);
         super.run_phase(phase);
         
-        `uvm_info("", "Agent run phase started", UVM_HIGH);
+        `uvm_info("APB_Agent", "run phase started", UVM_DEBUG);
     endtask
 
    

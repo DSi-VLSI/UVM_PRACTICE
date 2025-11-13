@@ -1,5 +1,4 @@
 
-`include "apb/typedef.svh"
 
 class uart_base_test extends uvm_test;
 
@@ -32,33 +31,33 @@ class uart_base_test extends uvm_test;
     apb_write_seq       write_seq;
     apb_read_seq        read_seq;
     apb_reset_seq       reset_seq;
+    uart_rx_seq         rx_seq;
 
 
     function new(string name = "uart_base_test", uvm_component parent = null);
         super.new(name, parent);
-        env = uart_environment::type_id::create("env", this);
-        `uvm_info("", "Base Test Constructed", UVM_LOW);
+        `uvm_info("Base Test", "Constructed", UVM_DEBUG);
     endfunction
-
 
 
     function void build_phase(uvm_phase phase);
         super.build_phase(phase);
-        `uvm_info("", "Base Test Build Phase", UVM_LOW);
+        env = uart_environment::type_id::create("env", this);
+        `uvm_info("Base Test", "Build", UVM_DEBUG);
     endfunction
 
-    function void connect_phase(uvm_phase phase);
-        super.connect_phase(phase);
-        `uvm_info("", "Base Test Connect Phase", UVM_LOW)
-    endfunction
+    // function void connect_phase(uvm_phase phase);
+    //     super.connect_phase(phase);
+    //     `uvm_info("Base Test", "Connected", UVM_DEBUG)
+    // endfunction
 
-    task run_phase(uvm_phase phase);
-        phase.raise_objection(this);
-        `uvm_info("", "Base Test run phase started, objection raised.", UVM_LOW)
+    // task run_phase(uvm_phase phase);
+    //     phase.raise_objection(this);
+    //     `uvm_info("Base Test", "run phase started, objection raised.", UVM_DEBUG)
 
-        phase.drop_objection(this);
-        `uvm_info("", "Base Test run phase finished, objection dropped.", UVM_LOW)
-    endtask
+    //     phase.drop_objection(this);
+    //     `uvm_info("Base Test", "run phase finished, objection dropped.", UVM_DEBUG)
+    // endtask
 
     task write(bit random, addr_t paddr, data_t pwdata, strb_t pstrb);
         write_seq = apb_write_seq::type_id::create("write_seq");
@@ -81,4 +80,10 @@ class uart_base_test extends uvm_test;
         read_seq.start(env.apb_agnt.apb_seqr); 
     endtask
 
+    task rx_transfer(bit random, logic [7:0] rx_data);
+        rx_seq = uart_rx_seq::type_id::create("rx_seq");
+        rx_seq.isRandom = random;
+        rx_seq.rx_data = rx_data;
+        rx_seq.start(env.uart_agnt.uart_seqr);
+    endtask
 endclass

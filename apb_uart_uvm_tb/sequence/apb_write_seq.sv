@@ -4,7 +4,7 @@
 class apb_write_seq extends apb_base_seq;
     `uvm_object_utils(apb_write_seq);
 
-    seq_item item;
+    apb_seq_item item;
 
     function new(string name = "apb_write_seq");
         super.new(name);
@@ -12,11 +12,11 @@ class apb_write_seq extends apb_base_seq;
 
 
     task body();
-        `uvm_info("", $sformatf("[Write Sequence] :: Write Sequence Body Inside"), UVM_HIGH);
+        `uvm_info("Write Sequence", $sformatf("Handshaking start"), UVM_DEBUG);
         
         wait_for_grant();
         
-        item = seq_item::type_id::create("item");   
+        item = apb_seq_item::type_id::create("item");   
 
         if(isRandom) begin
             // assert(item.randomize());
@@ -29,7 +29,7 @@ class apb_write_seq extends apb_base_seq;
         
         send_request(item); 
 
-        `uvm_info("", $sformatf("[Write Sequence] :: Sending Write Item Sent - Addr: 0x%0h, Data: 0x%0h", item.paddr, item.pwdata), UVM_HIGH);
+        `uvm_info("Write Sequence", $sformatf("Handshaking done"), UVM_DEBUG);
 
         wait_for_item_done();
 

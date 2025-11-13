@@ -1,6 +1,6 @@
 
 
-interface uart_interface(input bit pclk);
+interface uart_interface();
 
     logic tx_o;
     logic rx_i;

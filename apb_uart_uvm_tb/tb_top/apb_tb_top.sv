@@ -1,6 +1,8 @@
 
 `include "uvm_macros.svh"
 import uvm_pkg::*;
+
+
 import test_pkg::*;
 
 module apb_tb_top;
@@ -11,7 +13,7 @@ module apb_tb_top;
 
     // Interface instances
     apb_interface   apb_inf (.pclk(clk));
-    uart_interface  uart_inf (.pclk(clk));
+    uart_interface  uart_inf ();
 
     // DUT instantiation
     uart_top DUT(
@@ -31,7 +33,7 @@ module apb_tb_top;
         $dumpvars(0, apb_tb_top);
 
         // TODO REMOVE THIS
-        force uart_inf.rx_i = uart_inf.tx_o;
+        // force uart_inf.rx_i = uart_inf.tx_o;
 
         uvm_config_db #(virtual apb_interface)::set(null, "*", "apb_inf", apb_inf); 
         uvm_config_db #(virtual uart_interface)::set(null, "*", "uart_inf", uart_inf); 
