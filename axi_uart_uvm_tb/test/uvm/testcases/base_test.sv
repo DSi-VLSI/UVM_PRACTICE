@@ -17,7 +17,7 @@ class base_test extends uvm_test;
         if(uvm_config_db #(virtual reset_intf)::get(
             this, "", "reset_intf", u_reset_intf
         )) begin
-            `uvm_info(get_name(), "RESET INTERFACE FOUND", UVM_LOW)
+            `uvm_info(get_name(), "RESET INTERFACE FOUND", UVM_HIGH)
         end else begin
             `uvm_error(get_name(), "RESET INTERFACE NOT FOUND")    
         end
@@ -28,13 +28,13 @@ class base_test extends uvm_test;
     virtual task run_phase(uvm_phase phase);
         super.run_phase(phase);
         phase.raise_objection(this);
-        `uvm_info(get_name(), "INSIDE BASE_TEST", UVM_LOW)
-        
+        `uvm_info(get_name(), "INSIDE BASE_TEST", UVM_HIGH)
+        uvm_top.print_topology();
         apply_reset();
         u_uart_config_sequence.start(u_axi_env.u_axi_agent.u_axi_sequencer);
 
         #100ns;
-        `uvm_info(get_name(), "CLOSING BASE_TEST", UVM_LOW)
+        `uvm_info(get_name(), "CLOSING BASE_TEST", UVM_HIGH)
         phase.drop_objection(this);
     endtask
 
