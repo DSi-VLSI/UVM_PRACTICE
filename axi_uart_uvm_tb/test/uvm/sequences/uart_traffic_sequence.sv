@@ -8,11 +8,21 @@ class uart_traffic_sequence extends uvm_sequence;
         super.new(name);
     endfunction
 
+    logic isWriteTraffic;
+    logic [7:0]     addr;
+    logic [31:0]    data;
+    logic [3:0]     strb;
+
     virtual task body();
         dut_seq_item item;
 
-        empty_item(item);
-        read_modify_write(item, 8'h14, 16'h9b, 4'hf);
+        if (isWriteTraffic) begin
+            empty_item(item);
+            read_modify_write(item, addr, data, strb);
+        end else begin
+            empty_item(item);
+            read_at(item, addr);
+        end
     endtask
  
     task read_modify_write (dut_seq_item item, int addr, logic [31:0] wdata, logic [3:0] strb);

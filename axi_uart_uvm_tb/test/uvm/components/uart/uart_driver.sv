@@ -16,7 +16,7 @@ class uart_driver extends uvm_driver #(dut_seq_item);
         if(uvm_config_db #(virtual uart_intf)::get(
             this, "", "uart_intf", u_uart_intf
         ))begin
-            `uvm_info(get_name(), "UART INTERFACE FOUND", UVM_LOW)
+            `uvm_info(get_name(), "UART INTERFACE FOUND", UVM_HIGH)
         end else begin
             `uvm_error(get_name(), "UART INTERFACE NOT FOUND")
         end

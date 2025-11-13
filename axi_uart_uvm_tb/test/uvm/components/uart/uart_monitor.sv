@@ -32,7 +32,7 @@ class uart_monitor extends uvm_monitor;
         if(uvm_config_db #(virtual uart_intf)::get(
             this, "", "uart_intf", u_uart_intf
         )) begin
-            `uvm_info(get_name(), "UART INTERFACE FOUND", UVM_LOW)
+            `uvm_info(get_name(), "UART INTERFACE FOUND", UVM_HIGH)
         end else begin
             `uvm_error(get_name(), "UART INTERFACE NOT FOUND")
         end
@@ -76,13 +76,13 @@ class uart_monitor extends uvm_monitor;
             if (tag == "tx_thread") begin
                 if (tx_state == IDLE && previous_tx === '1 && u_uart_intf.tx === '0) begin
                     tx_state = START;
-                    $display("tx: %b", u_uart_intf.tx);
+                    // $display("tx: %b", u_uart_intf.tx);
                     repeat (baud_divisor / 2) @(posedge u_uart_intf.clk);
                 end
                 else if (tx_state == START) begin
-                    `uvm_info(get_name(), "TX STARTED", UVM_LOW)
+                    `uvm_info(get_name(), "TX STARTED", UVM_HIGH)
                     tx_state = DATA;
-                    $display("tx: %b", u_uart_intf.tx);
+                    // $display("tx: %b", u_uart_intf.tx);
                     repeat (baud_divisor) @(posedge u_uart_intf.clk);
                 end
                 else if (tx_state == DATA) begin
@@ -90,11 +90,11 @@ class uart_monitor extends uvm_monitor;
                     for (int i = 0; i < data_bit_count; i++) begin
                         tx_array[tx_counter] = u_uart_intf.tx;
                         tx_counter++;
-                        `uvm_info(get_name(), "TX DATA ACQUIRED", UVM_LOW)
+                        `uvm_info(get_name(), "TX DATA ACQUIRED", UVM_HIGH)
                         if(i == data_bit_count - 1) begin
                             tx_state = STOP;
                         end
-                        $display("tx: %b", u_uart_intf.tx);
+                        // $display("tx: %b", u_uart_intf.tx);
                         repeat (baud_divisor) @(posedge u_uart_intf.clk);
                     end
                 end
@@ -103,12 +103,12 @@ class uart_monitor extends uvm_monitor;
                     tx_item.tx_array = tx_array;
                     tx_analysis_port.write(tx_item);
                     for (int i = 0; i < stop_bit_count; i++) begin
-                        `uvm_info(get_name(), "TX STOPPED", UVM_LOW)
+                        `uvm_info(get_name(), "TX STOPPED", UVM_HIGH)
                         if(i == stop_bit_count - 1) begin
                             tx_state = IDLE;
                             tx_counter = 0;
                         end
-                        $display("tx: %b", u_uart_intf.tx);
+                        // $display("tx: %b", u_uart_intf.tx);
                         repeat (baud_divisor) @(posedge u_uart_intf.clk);
                     end
                 end
@@ -119,13 +119,13 @@ class uart_monitor extends uvm_monitor;
             else if (tag == "rx_thread") begin
                 if (rx_state == IDLE && previous_rx === '1 && u_uart_intf.rx === '0) begin
                     rx_state = START;
-                    $display("rx: %b", u_uart_intf.rx);
+                    // $display("rx: %b", u_uart_intf.rx);
                     repeat (baud_divisor / 2) @(posedge u_uart_intf.clk);
                 end
                 else if (rx_state == START) begin
-                    `uvm_info(get_name(), "RX STARTED", UVM_LOW)
+                    `uvm_info(get_name(), "RX STARTED", UVM_HIGH)
                     rx_state = DATA;
-                    $display("rx: %b", u_uart_intf.rx);
+                    // $display("rx: %b", u_uart_intf.rx);
                     repeat (baud_divisor) @(posedge u_uart_intf.clk);
                 end
                 else if (rx_state == DATA) begin
@@ -133,11 +133,11 @@ class uart_monitor extends uvm_monitor;
                     for (int i = 0; i < data_bit_count; i++) begin
                         rx_array[rx_counter] = u_uart_intf.rx;
                         rx_counter++;
-                        `uvm_info(get_name(), "RX DATA ACQUIRED", UVM_LOW)
+                        `uvm_info(get_name(), "RX DATA ACQUIRED", UVM_HIGH)
                         if(i == data_bit_count - 1) begin
                             rx_state = STOP;
                         end
-                        $display("rx: %b", u_uart_intf.rx);
+                        // $display("rx: %b", u_uart_intf.rx);
                         repeat (baud_divisor) @(posedge u_uart_intf.clk);
                     end
                 end
@@ -146,12 +146,12 @@ class uart_monitor extends uvm_monitor;
                     rx_item.rx_array = rx_array;
                     rx_analysis_port.write(rx_item);
                     for (int i = 0; i < stop_bit_count; i++) begin
-                        `uvm_info(get_name(), "RX STOPPED", UVM_LOW)
+                        `uvm_info(get_name(), "RX STOPPED", UVM_HIGH)
                         if(i == stop_bit_count - 1) begin
                             rx_state = IDLE;
                             rx_counter = 0;
                         end
-                        $display("rx: %b", u_uart_intf.rx);
+                        // $display("rx: %b", u_uart_intf.rx);
                         repeat (baud_divisor) @(posedge u_uart_intf.clk);
                     end
                 end

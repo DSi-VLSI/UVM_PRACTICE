@@ -18,7 +18,7 @@ class axi_driver extends uvm_driver #(dut_seq_item);
         if(uvm_config_db #(virtual axi_intf #(uvm_tb_axi_req_t, uvm_tb_axi_resp_t))::get(
             this, "", "axi_intf", u_axi_intf
         )) begin
-            `uvm_info(get_name(), "AXI INTERFACE FOUND", UVM_LOW)
+            `uvm_info(get_name(), "AXI INTERFACE FOUND", UVM_HIGH)
         end else begin
             `uvm_error(get_name(), "AXI INTERFACE NOT FOUND")    
         end

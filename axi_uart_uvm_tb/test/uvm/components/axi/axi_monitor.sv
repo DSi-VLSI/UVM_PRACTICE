@@ -23,7 +23,7 @@ class axi_monitor extends uvm_monitor;
         if(uvm_config_db #(virtual axi_intf #(uvm_tb_axi_req_t, uvm_tb_axi_resp_t))::get(
             this, "", "axi_intf", u_axi_intf
         )) begin
-            `uvm_info(get_name(), "AXI INTERFACE FOUND", UVM_LOW)
+            `uvm_info(get_name(), "AXI INTERFACE FOUND", UVM_HIGH)
         end else begin
             `uvm_error(get_name(), "AXI INTERFACE NOT FOUND")    
         end
@@ -61,7 +61,7 @@ class axi_monitor extends uvm_monitor;
                 else if(u_axi_intf.axi_req.b_ready && u_axi_intf.axi_resp.b_valid && outstd_write_req) begin
                     item.axi_resp.b = u_axi_intf.axi_resp.b;
                     outstd_write_req = '0;
-                    `uvm_info(get_name(), "AXI WRITE ITEM SENT TO SCBD", UVM_LOW)
+                    `uvm_info(get_name(), "AXI WRITE ITEM SENT TO SCBD", UVM_HIGH)
                     mon_analysis_port.write(item);
                 end
             end
@@ -75,7 +75,7 @@ class axi_monitor extends uvm_monitor;
                 else if(u_axi_intf.axi_req.r_ready && u_axi_intf.axi_resp.r_valid && outstd_read_req) begin
                     item.axi_resp.r = u_axi_intf.axi_resp.r;
                     outstd_write_req = '0;
-                    `uvm_info(get_name(), "AXI READ ITEM SENT TO SCBD", UVM_LOW)
+                    `uvm_info(get_name(), "AXI READ ITEM SENT TO SCBD", UVM_HIGH)
                     mon_analysis_port.write(item);
                 end
             end

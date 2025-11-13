@@ -7,7 +7,7 @@ export BUILD_DIR 	:= ${REPO_ROOT}/build
 export LOG_DIR 		:= ${REPO_ROOT}/logs
 REPO_ROOT_MOD 		:= $(shell echo ${CURDIR} | sed 's/\//\\\//g')
 
-UVM_VERBOSITY 	?= UVM_HIGH
+UVM_VERBOSITY 	?= UVM_LOW
 TESTNAME 		?= base_test
 GUI 			?= 0
 
