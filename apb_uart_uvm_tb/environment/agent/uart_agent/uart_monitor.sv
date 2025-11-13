@@ -8,6 +8,7 @@ class uart_monitor extends uvm_monitor;
 
     virtual uart_interface uart_inf;
     reg_transaction reg_trans;
+    uart_seq_item item;
     
     int highest_count;
     logic [10:0] tx_data;
@@ -17,6 +18,8 @@ class uart_monitor extends uvm_monitor;
 
     function new(string name = "uart_monitor", uvm_component parent = null);
         super.new(name, parent);
+        uart_port = new("uart_port", this);
+        `uvm_info("UART_Monitor", "Constructed", UVM_DEBUG);
     endfunction
 
     function void build_phase(uvm_phase phase);
@@ -62,6 +65,10 @@ class uart_monitor extends uvm_monitor;
                 #delay;
 
             end
+
+            item = uart_seq_item::type_id::create("item");
+            item.tx_data = tx_data;
+            uart_port.write(item);
 
             `uvm_info("UART_Monitor", $sformatf("==> Final Transmitted Data :: %0b", tx_data), UVM_LOW);
     
