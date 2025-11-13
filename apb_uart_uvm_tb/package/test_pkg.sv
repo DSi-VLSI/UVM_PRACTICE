@@ -8,8 +8,6 @@ package test_pkg;
     import seq_pkg::*;
     import environment_pkg::*;
 
-    `include "apb/typedef.svh"
-
     `include "uart_base_test.sv"
     `include "uart_basic_test.sv"
 endpackage

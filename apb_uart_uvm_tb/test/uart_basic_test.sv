@@ -2,8 +2,6 @@
 //  Class: uart_basic_test
 //
 
-
-
 class uart_basic_test extends uart_base_test;
 
     `uvm_component_utils(uart_basic_test)
@@ -12,6 +10,9 @@ class uart_basic_test extends uart_base_test;
     cfg_reg_t            cfg_reg;
     clk_div_reg_t        clk_div_reg;
     tx_fifo_data_reg_t   tx_fifo_data_reg;
+    rx_fifo_data_reg_t   rx_fifo_data_reg;
+
+    reg_transaction      reg_trans;
 
 
     function new(string name = "uart_basic_test", uvm_component parent = null);
@@ -20,9 +21,20 @@ class uart_basic_test extends uart_base_test;
 
 
     function void build_phase(uvm_phase phase);
-
         super.build_phase(phase);
+        reg_trans = new();
+        uvm_config_db #(reg_transaction)::set(this, "env.uart_agnt.*", "reg_trans", reg_trans);
+        `uvm_info("Basic Test", "Build", UVM_DEBUG);
+    endfunction
 
+    function void connect_phase(uvm_phase phase);
+        super.connect_phase(phase);
+        `uvm_info("Basic Test", "Connected", UVM_DEBUG);
+    endfunction
+
+    task configure_phase(uvm_phase phase);
+        phase.raise_objection(this);
+    
         // Initialize UART Control Register
         ctl_reg.CLK_EN = 'b1;
         ctl_reg.TX_FIFO_FLUSH = 'b0;
@@ -44,18 +56,29 @@ class uart_basic_test extends uart_base_test;
         tx_fifo_data_reg.TX_DATA = 'b10111010; // Example data to transmit
         tx_fifo_data_reg.Reserved = '0;
 
-        `uvm_info("", "Basic Test Build Phase", UVM_LOW);
+        // Assign to reg_transaction
+        rx_fifo_data_reg.Reserved = 'b0;
+        rx_fifo_data_reg.RX_DATA = 'b00111100; // Example received data
 
-    endfunction
 
-    function void connect_phase(uvm_phase phase);
-        super.connect_phase(phase);
-        `uvm_info("", "Basic Test Connect Phase", UVM_LOW);
-    endfunction
+
+        
+        reg_trans.ctrl_reg          = ctl_reg;
+        reg_trans.cfg_reg           = cfg_reg;
+        reg_trans.clk_div_reg       = clk_div_reg;
+        reg_trans.tx_fifo_data_reg  = tx_fifo_data_reg;
+        reg_trans.rx_fifo_data_reg  = rx_fifo_data_reg;
+
+    
+        phase.drop_objection(this);
+    endtask
+    
+
+    
 
     task run_phase(uvm_phase phase);
         phase.raise_objection(this);
-        `uvm_info("", "Basic Test run phase started, objection raised.", UVM_LOW);
+        `uvm_info("Basic Test", "run phase started, objection raised.", UVM_DEBUG);
 
         $display("ctl_reg = %b", ctl_reg);
         
@@ -63,14 +86,21 @@ class uart_basic_test extends uart_base_test;
         write(1'b0, REG_CTRL_ADDR, {ctl_reg}, 'b1111);
         write(1'b0, REG_CFG_ADDR, {cfg_reg}, 'b1111);
         write(1'b0, REG_CLK_DIV_ADDR, {clk_div_reg}, 'b1111);
+
         write(1'b0, REG_TX_FIFO_DATA_ADDR, {tx_fifo_data_reg}, 'b1111);
+        write(1'b0, REG_TX_FIFO_DATA_ADDR, {tx_fifo_data_reg}, 'b1111);
+        // tx_fifo_data_reg.TX_DATA = 'b00111100;
+        // write(1'b0, REG_TX_FIFO_DATA_ADDR, {tx_fifo_data_reg}, 'b1111);
 
-        read(1'b0, REG_TX_FIFO_STAT_ADDR);
+        rx_transfer(1'b0, rx_fifo_data_reg.RX_DATA); // Non-random RX transfer with specified data
+        rx_transfer(1'b0, rx_fifo_data_reg.RX_DATA); // Non-random RX transfer with specified data
 
-        #150us;
+
+
+        #350us;
     
         phase.drop_objection(this);
-        `uvm_info("", "Basic Test run phase finished, objection dropped.", UVM_LOW);
+        `uvm_info("Basic Test", "run phase finished, objection dropped.", UVM_DEBUG);
     endtask
     
 endclass

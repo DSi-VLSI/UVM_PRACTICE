@@ -2,10 +2,10 @@
 
 //  Class: apb_driver
 //
-class apb_driver extends uvm_driver #(seq_item);
+class apb_driver extends uvm_driver #(apb_seq_item);
     `uvm_component_utils(apb_driver);
 
-    seq_item item;
+    apb_seq_item item;
     virtual apb_interface apb_inf;
 
 
@@ -16,18 +16,18 @@ class apb_driver extends uvm_driver #(seq_item);
     function void build_phase(uvm_phase phase);
         super.build_phase(phase);
         void'(uvm_config_db #(virtual apb_interface)::get(this, "", "apb_inf", apb_inf));
-        `uvm_info("", "Driver Build Phase", UVM_LOW);
+        `uvm_info("APB_Driver", "Build", UVM_DEBUG);
     endfunction
 
 
     function void connect_phase(uvm_phase phase);
         super.connect_phase(phase);
-        `uvm_info("", "Driver Connect Phase", UVM_LOW);
+        `uvm_info("APB_Driver", "Connected", UVM_DEBUG);
     endfunction
 
     task run_phase(uvm_phase phase);
         super.run_phase(phase);
-        `uvm_info("", "Driver run phase started", UVM_HIGH);
+        `uvm_info("APB_Driver", "run phase started", UVM_DEBUG);
 
         forever begin
             seq_item_port.get_next_item(item);
@@ -83,7 +83,7 @@ class apb_driver extends uvm_driver #(seq_item);
                 @(posedge apb_inf.pclk);
                 
             if(i === 49) begin
-                `uvm_fatal(get_type_name, $sformatf("[APB Driver] :: Something went wrong"));
+                `uvm_fatal("APB Driver", $sformatf("Something went wrong"));
             end
         end
 

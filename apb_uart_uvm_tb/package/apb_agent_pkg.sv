@@ -6,7 +6,6 @@ package apb_agent_pkg;
     import uvm_pkg::*;
     import seq_pkg::*;
 
-
     `include "apb_sequencer.sv"
     `include "apb_driver.sv"
     `include "apb_monitor.sv"

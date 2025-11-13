@@ -18,20 +18,20 @@ class uart_agent extends uvm_agent;
         uart_drvr = uart_driver::type_id::create("uart_drvr", this);
         uart_mntr = uart_monitor::type_id::create("uart_mntr", this);
         uart_seqr = uart_sequencer::type_id::create("uart_seqr", this);
-        `uvm_info("", "Agent Build Phase", UVM_LOW);
+        `uvm_info("UART_Agent", "Build", UVM_DEBUG);
     endfunction
 
 
     function void connect_phase(uvm_phase phase);
         super.connect_phase(phase);
         uart_drvr.seq_item_port.connect(uart_seqr.seq_item_export);
-        `uvm_info("", "Agent Connect Phase", UVM_LOW);
+        `uvm_info("UART_Agent", "Connected", UVM_DEBUG);
     endfunction
 
     task run_phase(uvm_phase phase);
         super.run_phase(phase);
         
-        `uvm_info("", "Agent run phase started", UVM_HIGH);
+        `uvm_info("UART_Agent", "run phase started", UVM_DEBUG);
     endtask
 
    
