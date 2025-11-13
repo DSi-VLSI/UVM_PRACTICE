@@ -9,6 +9,8 @@ class apb_monitor extends uvm_monitor;
 
     function new(string name = "apb_monitor", uvm_component parent = null);
         super.new(name, parent);
+        apb_port = new("apb_port", this);
+        `uvm_info("APB_Monitor", "Constructed", UVM_DEBUG);
     endfunction
 
     function void build_phase(uvm_phase phase);

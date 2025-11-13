@@ -23,21 +23,20 @@ class uart_scoreboard extends uvm_scoreboard;
 
     function void connect_phase(uvm_phase phase);
         super.connect_phase(phase);
-    
         `uvm_info("Scoreboard", "Connected", UVM_DEBUG)
         
     endfunction
 
 
 
-    virtual function void write_apb(apb_seq_item item);
-        // `uvm_info("Scoreboard", $sformatf("APB Item Received: ADDR=0x%0h, DATA=0x%0h, WRITE=%0b", item.addr, item.data, item.is_write), UVM_DEBUG);
-        // Add comparison logic here
+    function void write_apb(apb_seq_item item);
+        item.print();
+        `uvm_info("Scoreboard", $sformatf("APB Item Received"), UVM_HIGH);
     endfunction
 
-    virtual function void write_uart(uart_seq_item item);
-        // `uvm_info("Scoreboard", $sformatf("UART Item Received: RX_DATA=0x%0h", item.rx_data), UVM_DEBUG);
-        // Add comparison logic here
+    function void write_uart(uart_seq_item item);
+        item.print();
+        `uvm_info("Scoreboard", $sformatf("UART Item Received"), UVM_HIGH);
     endfunction
 
     task run_phase(uvm_phase phase);
