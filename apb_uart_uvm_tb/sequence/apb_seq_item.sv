@@ -10,6 +10,8 @@ class apb_seq_item extends uvm_sequence_item;
     rand strb_t         pstrb;
     rand logic          pwrite; 
          logic          isReset;
+         bit            isTx;
+         bit            isRx;
 
 
     `uvm_object_utils_begin(apb_seq_item)

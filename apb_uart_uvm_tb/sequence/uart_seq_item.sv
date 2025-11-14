@@ -4,6 +4,9 @@ class uart_seq_item extends uvm_sequence_item;
 
     rand logic  [7:0]   rx_data;
     rand logic [10:0]   tx_data;
+         bit            isTx;
+         bit            isRx;
+
 
 
     `uvm_object_utils_begin(uart_seq_item)

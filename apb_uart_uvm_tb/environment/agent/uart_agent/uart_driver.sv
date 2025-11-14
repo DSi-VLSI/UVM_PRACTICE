@@ -54,7 +54,6 @@ class uart_driver extends uvm_driver #(uart_seq_item);
 
             #delay;
 
-            
             uart_inf.rx_i = 0;  // Start bit
             #delay;
 
@@ -68,7 +67,6 @@ class uart_driver extends uvm_driver #(uart_seq_item);
 
             uart_inf.rx_i = 1; // stop bit
             #delay;
-
 
             seq_item_port.item_done();
             
