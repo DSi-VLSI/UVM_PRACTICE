@@ -9,13 +9,13 @@ class uart_scoreboard extends uvm_scoreboard;
     uvm_analysis_imp_apb #(apb_seq_item, uart_scoreboard) apb_imp;
     uvm_analysis_imp_uart #(uart_seq_item, uart_scoreboard) uart_imp;
 
-    apb_seq_item    exp_tx [$];
-    uart_seq_item   exp_rx [$];
-    uart_seq_item   act_tx [$];
-    apb_seq_item    act_rx [$];
+    apb_seq_item    tx_exp_q [$];
+    uart_seq_item   tx_act_q [$];
+    uart_seq_item   rx_exp_q [$];
+    apb_seq_item    rx_act_q [$];
 
-    apb_seq_item apb_item_exp, apb_item_act;
-    uart_seq_item uart_item_exp, uart_item_act;
+    apb_seq_item    tx_exp, rx_act;
+    uart_seq_item   rx_exp, tx_act;
 
     function new(string name = "uart_scoreboard", uvm_component parent = null);
         super.new(name, parent);
@@ -34,58 +34,56 @@ class uart_scoreboard extends uvm_scoreboard;
     endfunction
 
     function void write_apb(apb_seq_item item);
+
         item.print();
-        if(item.isTx) begin
-            exp_tx.push_front(item);
+
+        if(item.write && item.addr == base_pkg::REG_TX_FIFO_DATA_ADDR) begin
+            tx_exp_q.push_front(item);
         end
-        else if(item.isRx) begin
-            act_rx.push_front(item);
+        else if(item.write == 0 && item.addr == base_pkg::REG_RX_FIFO_DATA_ADDR) begin
+            rx_act_q.push_front(item);
         end
 
         `uvm_info("Scoreboard", $sformatf("APB Item Received"), UVM_HIGH);
     endfunction
 
     function void write_uart(uart_seq_item item);
-        // item.print();
 
-        if(item.isRx) begin
-            exp_rx.push_front(item);
+        item.print();
+
+
+        if(item.isTx) begin
+            tx_act_q.push_front(item);
         end
-        else if(item.isTx) begin
-            act_tx.push_front(item);
+        else begin
+            rx_exp_q.push_front(item);
         end
 
-
-        `uvm_info("Scoreboard", $sformatf("UART Item Received"), UVM_HIGH);
+        `uvm_info("Scoreboard", $sformatf("UART Item Received"), UVM_FULL);
     endfunction
 
     task run_phase(uvm_phase phase);
-       forever begin
-            compare();
-       end
-    endtask
-
-    task compare();
         fork
             tx_compare();
             rx_compare();
-       join
+        join
     endtask
 
 
     task tx_compare();
         forever begin
 
-            wait(act_tx.size() > 0 && exp_tx.size() > 0);
+            
+            wait(tx_act_q.size() > 0 && tx_exp_q.size() > 0);
 
-            apb_item_exp =  exp_tx.pop_back();
-            uart_item_act = act_tx.pop_back();
+            tx_exp =  tx_exp_q.pop_back();
+            tx_act = tx_act_q.pop_back();
 
-            if(apb_item_exp.pwdata == uart_item_act.tx_data) begin
-                `uvm_info("Scoreboard", $sformatf("[PASSED] :: Expexted TX: %0d | Actual TX: %0d", apb_item_exp.pwdata, uart_item_act.tx_data), UVM_LOW);
+            if(tx_exp.data == tx_act.data) begin
+                `uvm_info("Scoreboard", $sformatf("[PASSED] :: Expexted TX: %0d | Actual TX: %0d", tx_exp.data, tx_act.data), UVM_LOW);
             end
             else begin
-                `uvm_info("Scoreboard", $sformatf("[FAILED] :: Expexted TX: %0d | Actual TX: %0d", apb_item_exp.pwdata, uart_item_act.tx_data), UVM_LOW);
+                `uvm_info("Scoreboard", $sformatf("[FAILED] :: Expexted TX: %0d | Actual TX: %0d", tx_exp.data, tx_act.data), UVM_LOW);
             end
 
         end
@@ -94,16 +92,16 @@ class uart_scoreboard extends uvm_scoreboard;
 
     task rx_compare();
         forever begin
-            wait(exp_rx.size() > 0 && act_rx.size() > 0);
+            wait(rx_exp_q.size() > 0 && rx_act_q.size() > 0);
 
-            apb_item_act =  act_rx.pop_back();
-            uart_item_exp = exp_rx.pop_back();
+            rx_act = rx_act_q.pop_back();
+            rx_exp = rx_exp_q.pop_back();
 
-            if(apb_item_act.pwdata == uart_item_exp.rx_data) begin
-                `uvm_info("Scoreboard", $sformatf("[PASSED] :: Expexted RX: %0d | Actual RX: %0d", apb_item_act.pwdata, uart_item_exp.rx_data), UVM_LOW);
+            if(rx_act.data == rx_exp.data) begin
+                `uvm_info("Scoreboard", $sformatf("[PASSED] :: Expexted RX: %0d | Actual RX: %0d", rx_act.data, rx_exp.data), UVM_LOW);
             end
             else begin
-                `uvm_info("Scoreboard", $sformatf("[FAILED] :: Expexted RX: %0d | Actual RX: %0d", apb_item_act.pwdata, uart_item_exp.rx_data), UVM_LOW);
+                `uvm_info("Scoreboard", $sformatf("[FAILED] :: Expexted RX: %0d | Actual RX: %0d", rx_act.data, rx_exp.data), UVM_LOW);
             end
 
         end

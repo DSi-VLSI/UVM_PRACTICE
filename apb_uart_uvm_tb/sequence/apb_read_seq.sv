@@ -21,8 +21,8 @@ class apb_read_seq extends apb_base_seq;
         if(isRandom) begin
             // assert(item.randomize());
         end else begin
-            item.paddr  =   paddr;
-            item.pwrite =   1'b0;
+            item.addr   =   addr;
+            item.write =    0;
         end
         
         send_request(item); 

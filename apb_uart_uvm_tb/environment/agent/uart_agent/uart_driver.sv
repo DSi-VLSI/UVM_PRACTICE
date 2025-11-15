@@ -58,11 +58,11 @@ class uart_driver extends uvm_driver #(uart_seq_item);
             #delay;
 
             for(int i = 0; i < 8; i++) begin
-                uart_inf.rx_i = item.rx_data[i];
+                uart_inf.rx_i = item.data[i];
                 #delay;
             end
 
-            uart_inf.rx_i = get_parity_bit(item.rx_data, reg_trans.cfg_reg.PARITY_TYPE); // parity bit
+            uart_inf.rx_i = get_parity_bit(item.data, reg_trans.cfg_reg.PARITY_TYPE); // parity bit
             #delay;
 
             uart_inf.rx_i = 1; // stop bit

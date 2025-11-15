@@ -59,31 +59,34 @@ class uart_base_test extends uvm_test;
     //     `uvm_info("Base Test", "run phase finished, objection dropped.", UVM_DEBUG)
     // endtask
 
-    task write(bit random, addr_t paddr, data_t pwdata, strb_t pstrb);
-        write_seq = apb_write_seq::type_id::create("write_seq");
-        write_seq.pwdata = pwdata;
-        write_seq.paddr = paddr;
-        write_seq.pstrb = pstrb;
-        write_seq.isRandom = random;
+    task write(bit random, addr_t addr, data_t data);
+        write_seq           = apb_write_seq::type_id::create("write_seq");
+        write_seq.data      = data;
+        write_seq.addr      = addr;
+        write_seq.isRandom  = random;
+
         write_seq.start(env.apb_agnt.apb_seqr); 
     endtask
 
     task reset();
-        reset_seq = apb_reset_seq::type_id::create("reset_seq");
+        reset_seq           = apb_reset_seq::type_id::create("reset_seq");
+
         reset_seq.start(env.apb_agnt.apb_seqr); 
     endtask
 
-    task read(bit random, addr_t paddr);
-        read_seq = apb_read_seq::type_id::create("read_seq");
-        read_seq.paddr = paddr;
-        read_seq.isRandom = random;
+    task read(bit random, addr_t addr);
+        read_seq            = apb_read_seq::type_id::create("read_seq");
+        read_seq.addr       = addr;
+        read_seq.isRandom   = random;
+
         read_seq.start(env.apb_agnt.apb_seqr); 
     endtask
 
-    task rx_transfer(bit random, logic [7:0] rx_data);
-        rx_seq = uart_rx_seq::type_id::create("rx_seq");
-        rx_seq.isRandom = random;
-        rx_seq.rx_data = rx_data;
+    task rx_transfer(bit random, logic [7:0] data);
+        rx_seq              = uart_rx_seq::type_id::create("rx_seq");
+        rx_seq.isRandom     = random;
+        rx_seq.data         = data;
+
         rx_seq.start(env.uart_agnt.uart_seqr);
     endtask
 endclass

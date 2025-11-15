@@ -21,10 +21,9 @@ class apb_write_seq extends apb_base_seq;
         if(isRandom) begin
             // assert(item.randomize());
         end else begin
-            item.paddr  =   paddr;
-            item.pwdata =   pwdata;
-            item.pstrb  =   pstrb;
-            item.pwrite =   1'b1;
+            item.addr   =   addr;
+            item.data   =   data;
+            item.write  =   1'b1;
         end
         
         send_request(item); 

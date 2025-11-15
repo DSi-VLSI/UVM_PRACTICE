@@ -5,21 +5,17 @@ class apb_seq_item extends uvm_sequence_item;
     import base_pkg::data_t;
     import base_pkg::strb_t;
 
-    rand addr_t         paddr;
-    rand data_t         pwdata;
-    rand strb_t         pstrb;
-    rand logic          pwrite; 
+    rand addr_t         addr;
+    rand data_t         data;
+    rand logic          write; 
+
          logic          isReset;
-         bit            isTx;
-         bit            isRx;
 
 
     `uvm_object_utils_begin(apb_seq_item)
-        `uvm_field_int(paddr, UVM_ALL_ON)
-        `uvm_field_int(pwdata, UVM_ALL_ON)
-        `uvm_field_int(pstrb, UVM_ALL_ON)
-        `uvm_field_int(pwrite, UVM_ALL_ON)
-        `uvm_field_int(isReset, UVM_ALL_ON)
+        `uvm_field_int(addr, UVM_ALL_ON)
+        `uvm_field_int(data, UVM_ALL_ON)
+        `uvm_field_int(write, UVM_ALL_ON)
     `uvm_object_utils_end 
 
 

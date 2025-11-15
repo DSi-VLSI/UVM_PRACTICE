@@ -67,10 +67,10 @@ class apb_driver extends uvm_driver #(apb_seq_item);
         apb_inf.apb_req.psel = 1'b1;
         apb_inf.apb_req.penable = 1'b0;
 
-        apb_inf.apb_req.pwrite = item.pwrite;
-        apb_inf.apb_req.paddr = item.paddr;
-        apb_inf.apb_req.pwdata = item.pwdata;
-        apb_inf.apb_req.pstrb = item.pstrb;
+        apb_inf.apb_req.pwrite  = item.write;
+        apb_inf.apb_req.paddr   = item.addr;
+        apb_inf.apb_req.pwdata  = item.data;
+        apb_inf.apb_req.pstrb   = 4'b1111;
 
         @(posedge apb_inf.pclk);
         apb_inf.apb_req.penable = 1'b1;

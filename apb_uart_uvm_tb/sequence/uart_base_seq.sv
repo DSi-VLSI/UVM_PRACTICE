@@ -6,7 +6,7 @@ class uart_base_seq extends uvm_sequence;
 
     `uvm_object_utils(uart_base_seq);
 
-    logic [7:0] rx_data;
+    logic [7:0] data;
     bit         isRandom;
 
 

@@ -79,25 +79,23 @@ class uart_basic_test extends uart_base_test;
     task run_phase(uvm_phase phase);
         phase.raise_objection(this);
         `uvm_info("Basic Test", "run phase started, objection raised.", UVM_DEBUG);
-
-        $display("ctl_reg = %b", ctl_reg);
         
         reset();
-        write(1'b0, REG_CTRL_ADDR, {ctl_reg}, 'b1111);
-        write(1'b0, REG_CFG_ADDR, {cfg_reg}, 'b1111);
-        write(1'b0, REG_CLK_DIV_ADDR, {clk_div_reg}, 'b1111);
+        write(1'b0, REG_CTRL_ADDR, {ctl_reg});
+        write(1'b0, REG_CFG_ADDR, {cfg_reg});
+        write(1'b0, REG_CLK_DIV_ADDR, {clk_div_reg});
 
-        write(1'b0, REG_TX_FIFO_DATA_ADDR, {tx_fifo_data_reg}, 'b1111);
-        write(1'b0, REG_TX_FIFO_DATA_ADDR, {tx_fifo_data_reg}, 'b1111);
+        write(1'b0, REG_TX_FIFO_DATA_ADDR, {tx_fifo_data_reg});
+        write(1'b0, REG_TX_FIFO_DATA_ADDR, {tx_fifo_data_reg});
         // tx_fifo_data_reg.TX_DATA = 'b00111100;
-        // write(1'b0, REG_TX_FIFO_DATA_ADDR, {tx_fifo_data_reg}, 'b1111);
+        // write(1'b0, REG_TX_FIFO_DATA_ADDR, {tx_fifo_data_reg});
 
         rx_transfer(1'b0, rx_fifo_data_reg.RX_DATA); // Non-random RX transfer with specified data
         rx_transfer(1'b0, rx_fifo_data_reg.RX_DATA); // Non-random RX transfer with specified data
 
 
 
-        #350us;
+        #300us;
     
         phase.drop_objection(this);
         `uvm_info("Basic Test", "run phase finished, objection dropped.", UVM_DEBUG);

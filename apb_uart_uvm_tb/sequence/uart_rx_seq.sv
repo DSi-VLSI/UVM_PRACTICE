@@ -21,7 +21,8 @@ class uart_rx_seq extends uart_base_seq;
         if(isRandom) begin
             // assert(item.randomize());
         end else begin
-            item.rx_data  =  rx_data;
+            item.data  =  data;
+            item.isTx  =  0;
         end
         
         send_request(item); 

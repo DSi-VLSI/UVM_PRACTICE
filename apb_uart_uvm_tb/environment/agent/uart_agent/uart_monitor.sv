@@ -67,12 +67,11 @@ class uart_monitor extends uvm_monitor;
             end
 
             item = uart_seq_item::type_id::create("item");
-            item.tx_data = tx_data[8:1];
+            item.data = tx_data[8:1];
             item.isTx = 1;
-            item.isRx = 0;
             uart_port.write(item);
 
-            `uvm_info("UART_Monitor", $sformatf("==> Final Transmitted Data :: %0b", tx_data), UVM_LOW);
+            `uvm_info("UART_Monitor", $sformatf("==> Final Transmitted Data :: %0b", tx_data), UVM_FULL);
     
             
         end
@@ -99,12 +98,11 @@ class uart_monitor extends uvm_monitor;
             end
 
             item = uart_seq_item::type_id::create("item");
-            item.rx_data = rx_data[8:1];
+            item.data = rx_data[8:1];
             item.isTx = 0;
-            item.isRx = 1;
             uart_port.write(item);
 
-            `uvm_info("UART_Monitor", $sformatf("==> Final Received Data :: %0b", rx_data), UVM_LOW);
+            `uvm_info("UART_Monitor", $sformatf("==> Final Received Data :: %0b", rx_data), UVM_FULL);
 
         end
 
